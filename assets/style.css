@@ -411,3 +411,21 @@ h3 { font-size: 1.25rem; }
   .cta-band { padding: 48px 26px; }
   .section { padding: 60px 0; }
 }
+
+/* ---------- Partner clinic view ---------- */
+.partner-banner {
+  background: var(--navy); color: var(--offwhite);
+  border-radius: 16px; padding: 20px 26px; margin-bottom: 30px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.partner-banner strong { font-family: var(--font-display); font-size: 1.15rem; }
+.partner-banner span { font-size: .9rem; opacity: .8; }
+.tag-yours { background: var(--coral); color: var(--navy-deep); }
+
+/* ---------- Code block (For clinics page) ---------- */
+.code-block {
+  background: var(--navy-deep); color: #cfe0cf;
+  border-radius: 12px; padding: 18px 22px;
+  font-family: Consolas, Menlo, monospace; font-size: .85rem;
+  line-height: 1.6; overflow-x: auto; white-space: pre;
+}

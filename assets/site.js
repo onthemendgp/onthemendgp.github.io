@@ -1,11 +1,33 @@
 /* =========================================================
    ON THE MEND – SHARED SITE SCRIPT
    Populates links from links.js, renders episode/clip cards,
-   powers the search, FAQ accordion, mobile menu and reveals.
+   powers the search, partner clinic views (?p=code), FAQ
+   accordion, mobile menu and reveals.
    ========================================================= */
 (function () {
   var L = window.OTM_LINKS || {};
   var DATA = window.OTM_DATA || [];
+
+  /* ----- Partner clinic view (?p=code) ----- */
+  var PARTNERS = window.OTM_PARTNERS || {};
+  var partnerId = new URLSearchParams(location.search).get("p");
+  var partner = (partnerId && PARTNERS[partnerId]) ? PARTNERS[partnerId] : null;
+
+  function isFeatured(item) {
+    return !!(partner && item.clinic && item.clinic === partner.featuredClinic);
+  }
+  function partnerVisible(item) {
+    if (!partner) return true;
+    if (!item.suburb) return true;
+    if (isFeatured(item)) return true;
+    return (partner.excludeSuburbs || []).indexOf(item.suburb) === -1;
+  }
+  function partnerSort(list) {
+    if (!partner) return list;
+    return list.slice().sort(function (a, b) {
+      return (isFeatured(b) ? 1 : 0) - (isFeatured(a) ? 1 : 0);
+    });
+  }
 
   function url(v) {
     return (v && v.indexOf("REPLACE_ME") !== 0) ? v : "";
@@ -35,9 +57,11 @@
   /* ----- Card templates ----- */
   var playSvg = '<span class="play"><span class="play-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></span>';
 
-  function tagRow(tags, region) {
-    var html = tags.map(function (t) { return '<span class="tag">' + t + "</span>"; }).join("");
-    if (region) html += '<span class="tag tag-loc">' + region + "</span>";
+  function tagRow(item) {
+    var html = "";
+    if (isFeatured(item)) html += '<span class="tag tag-yours">Your clinic\'s doctor</span>';
+    html += item.tags.map(function (t) { return '<span class="tag">' + t + "</span>"; }).join("");
+    if (item.region) html += '<span class="tag tag-loc">' + item.region + "</span>";
     return '<div class="tag-row">' + html + "</div>";
   }
 
@@ -52,7 +76,7 @@
         "<h3>" + item.title + "</h3>" +
         '<p class="card-desc">' + item.description + "</p>" +
         '<p class="card-guest">With ' + item.guestCredit + "</p>" +
-        tagRow(item.tags, item.region) +
+        tagRow(item) +
         '<div class="card-actions"><a class="btn btn-ghost" data-out href="' + platform("youtube") + '">Subscribe for the release</a></div>' +
         "</div></article>";
     }
@@ -63,7 +87,7 @@
       "<h3>" + item.title + "</h3>" +
       '<p class="card-desc">' + item.description + "</p>" +
       '<p class="card-guest">With ' + item.guestCredit + "</p>" +
-      tagRow(item.tags, item.region) +
+      tagRow(item) +
       '<div class="card-actions">' +
       '<a class="btn btn-coral" data-out href="' + yt + '">Watch on YouTube</a>' +
       '<a class="btn btn-ghost" data-out href="' + sp + '">Listen on Spotify</a>' +
@@ -93,7 +117,7 @@
       "<h3>" + item.title + "</h3>" +
       '<p class="card-desc">' + item.description + "</p>" +
       '<p class="card-guest">With ' + item.guest + "</p>" +
-      tagRow(item.tags) +
+      tagRow(item) +
       '<div class="card-actions"><a class="btn btn-coral" data-out href="' + link + '">Watch on YouTube</a></div>' +
       "</div></article>";
   }
@@ -138,6 +162,16 @@
     var countEl = document.getElementById("results-count");
     var chips = document.querySelectorAll(".chip[data-q]");
 
+    /* Partner welcome banner */
+    if (partner) {
+      var banner = document.createElement("div");
+      banner.className = "partner-banner";
+      banner.innerHTML = "<strong>Patient resources for " + partner.name + "</strong>" +
+        "<span>Episodes featuring your clinic's own team appear first. The wider On The Mend health library follows. General information only: always speak with your own GP.</span>";
+      var searchBar = document.querySelector(".search-bar");
+      searchBar.parentNode.insertBefore(banner, searchBar);
+    }
+
     function normalise(s) { return (s || "").toLowerCase(); }
 
     function matches(item, q) {
@@ -148,7 +182,8 @@
 
     function render() {
       var q = normalise(searchInput.value.trim());
-      var hits = DATA.filter(function (d) { return matches(d, q); });
+      var hits = DATA.filter(function (d) { return partnerVisible(d) && matches(d, q); });
+      hits = partnerSort(hits);
       chips.forEach(function (c) { c.classList.toggle("active", normalise(c.getAttribute("data-q")) === q); });
       if (!hits.length) {
         countEl.textContent = "";
