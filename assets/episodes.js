@@ -15,7 +15,7 @@ window.OTM_DATA = [
     clinic: "Chelsea Arcade Medical",
     suburb: "Chelsea",
     guestCredit: "Dr Geoffrey Kimanje, who practises at Chelsea Arcade Medical",
-    image: "assets/img/ep2.jpg",
+    image: "/assets/img/ep2.jpg",
     region: "South East VIC",
     description: "Why men's health often gets overlooked, the health checks that change with age, signs someone might be struggling, and the small changes that add up.",
     tags: ["Men's health", "Mental health", "Health checks", "Prevention"],
@@ -31,7 +31,7 @@ window.OTM_DATA = [
     clinic: "Chelsea Arcade Medical",
     suburb: "Chelsea",
     guestCredit: "Dr Ross Wines, who practises at Chelsea Arcade Medical",
-    image: "assets/img/ep1.jpg",
+    image: "/assets/img/ep1.jpg",
     region: "South East VIC",
     description: "Why Australia sees so much skin cancer, how to protect your skin, what the SCAN self-check looks for, and what happens in a professional skin check.",
     tags: ["Skin checks", "Skin cancer", "Sun safety", "Early detection"],
@@ -62,7 +62,7 @@ window.OTM_DATA = [
     guest: "Dr Ross Wines",
     clinic: "Chelsea Arcade Medical",
     suburb: "Chelsea",
-    image: "assets/img/clip_Three-simple-ways-to-lower-your-skin-can.jpg",
+    image: "/assets/img/clip_Three-simple-ways-to-lower-your-skin-can.jpg",
     description: "Check the daily UV index, follow Slip Slop Slap Seek Slide, and get to know your own skin.",
     tags: ["Skin cancer", "Sun safety"],
     keywords: "skin cancer risk uv index sunscreen slip slop slap habits prevention sun safety"
@@ -75,7 +75,7 @@ window.OTM_DATA = [
     guest: "Dr Ross Wines",
     clinic: "Chelsea Arcade Medical",
     suburb: "Chelsea",
-    image: "assets/img/clip_Are-you-safer-from-skin-cancer-down-sout.jpg",
+    image: "/assets/img/clip_Are-you-safer-from-skin-cancer-down-sout.jpg",
     description: "Why outdoor workers face higher sun exposure wherever they live in Australia.",
     tags: ["Skin cancer", "Outdoor workers"],
     keywords: "skin cancer south victoria melbourne farmers tradies outdoor workers sun exposure"
@@ -88,7 +88,7 @@ window.OTM_DATA = [
     guest: "Dr Ross Wines",
     clinic: "Chelsea Arcade Medical",
     suburb: "Chelsea",
-    image: "assets/img/clip_Why-a-small-spot-can-still-be-serious.jpg",
+    image: "/assets/img/clip_Why-a-small-spot-can-still-be-serious.jpg",
     description: "A spot does not have to be large to be worth checking. Sore, changing, abnormal or new: see your GP.",
     tags: ["Melanoma", "Early detection"],
     keywords: "small spot mole melanoma serious scan sore changing abnormal new early detection"
@@ -101,7 +101,7 @@ window.OTM_DATA = [
     guest: "Dr Ross Wines",
     clinic: "Chelsea Arcade Medical",
     suburb: "Chelsea",
-    image: "assets/img/clip_Spot-check-vs-full-body-skin-check.jpg",
+    image: "/assets/img/clip_Spot-check-vs-full-body-skin-check.jpg",
     description: "What the difference is and when each one makes sense.",
     tags: ["Skin checks"],
     keywords: "spot check full body skin check difference appointment what happens"
@@ -114,7 +114,7 @@ window.OTM_DATA = [
     guest: "Dr Ross Wines",
     clinic: "Chelsea Arcade Medical",
     suburb: "Chelsea",
-    image: "assets/img/clip_What-led-this-GP-to-skin-cancer-medicine.jpg",
+    image: "/assets/img/clip_What-led-this-GP-to-skin-cancer-medicine.jpg",
     description: "The story behind one GP's path into skin cancer medicine.",
     tags: ["Behind the scenes"],
     keywords: "gp doctor career skin cancer medicine story behind the scenes wines"
@@ -129,7 +129,7 @@ window.OTM_DATA = [
     guest: "Dr Geoffrey Kimanje",
     clinic: "Chelsea Arcade Medical",
     suburb: "Chelsea",
-    image: "assets/img/clip_Signs-a-man-might-be-struggling.jpg",
+    image: "/assets/img/clip_Signs-a-man-might-be-struggling.jpg",
     description: "Men's mental health does not always look the way you might expect. Signs worth noticing, in yourself or someone you care about.",
     tags: ["Mental health", "Men's health"],
     keywords: "mental health men struggling signs depression withdrawn sleep irritability alcohol lifeline wellbeing"
@@ -142,7 +142,7 @@ window.OTM_DATA = [
     guest: "Dr Geoffrey Kimanje",
     clinic: "Chelsea Arcade Medical",
     suburb: "Chelsea",
-    image: "assets/img/clip_The-health-checks-that-change-with-age.jpg",
+    image: "/assets/img/clip_The-health-checks-that-change-with-age.jpg",
     description: "From blood pressure checks to bowel cancer screening from age 45: a simple guide to where health checks start.",
     tags: ["Health checks", "Men's health"],
     keywords: "health checks age blood pressure bowel screening 45 checkup men prevention"
@@ -155,7 +155,7 @@ window.OTM_DATA = [
     guest: "Dr Geoffrey Kimanje",
     clinic: "Chelsea Arcade Medical",
     suburb: "Chelsea",
-    image: "assets/img/clip_Small-changes-for-a-healthier-you.jpg",
+    image: "/assets/img/clip_Small-changes-for-a-healthier-you.jpg",
     description: "About 150 minutes of exercise a week, steady steps with weight, and staying connected.",
     tags: ["Prevention", "Lifestyle"],
     keywords: "small changes exercise 150 minutes weight healthy habits lifestyle connection"
@@ -168,7 +168,7 @@ window.OTM_DATA = [
     guest: "Dr Geoffrey Kimanje",
     clinic: "Chelsea Arcade Medical",
     suburb: "Chelsea",
-    image: "assets/img/clip_Why-mens-health-often-gets-overlooked.jpg",
+    image: "/assets/img/clip_Why-mens-health-often-gets-overlooked.jpg",
     description: "Why many men wait too long before seeing a GP, and what helps start the conversation.",
     tags: ["Men's health"],
     keywords: "mens health overlooked avoid doctor gp conversation barriers stigma"
