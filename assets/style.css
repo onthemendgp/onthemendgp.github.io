@@ -431,7 +431,7 @@ h3 { font-size: 1.25rem; }
 }
 
 /* ---------- Episode transcript (collapsible) ---------- */
-.transcript { border-top: 1px solid rgba(33,71,103,.14); }
+.transcript { border-top: 1px solid rgba(33,71,103,.14); padding: 56px 0 40px; }
 .transcript details { max-width: 820px; }
 .transcript summary {
   list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 12px;
