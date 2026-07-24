@@ -53,6 +53,21 @@ window.OTM_DATA = [
     tags: ["Hearing", "Hearing checks", "Prevention"],
     keywords: "hearing loss check ears audiologist deaf headphones earbuds noise tinnitus hearing australia bourke ear protection volume victoria melbourne south east"
   },
+  {
+    id: "ep4",
+    type: "coming",
+    number: 4,
+    title: "A Day in the Life of a Receptionist",
+    guest: "Reception team",
+    clinic: "",
+    suburb: "",
+    guestCredit: "one of the receptionists who keep the front desk running",
+    image: "",
+    region: "South East VIC",
+    description: "What really happens behind the front desk: the calls, the juggling, and the person who holds a GP clinic together. An honest look at reception.",
+    tags: ["Behind the scenes", "Reception", "Coming soon"],
+    keywords: "receptionist reception front desk day in the life behind the scenes phones bookings appointments clinic team medical practice"
+  },
 
   /* ---------------- Episode 1 clips ---------------- */
   {
