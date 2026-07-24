@@ -29,6 +29,18 @@
     });
   }
 
+  /* Newest first: published episodes by number desc, then coming-soon, clips newest episode first */
+  function chronoSort(list) {
+    return list.slice().sort(function (a, b) {
+      var clipA = a.type === "clip" ? 1 : 0, clipB = b.type === "clip" ? 1 : 0;
+      if (clipA !== clipB) return clipA - clipB;
+      if (clipA === 1) return (b.episode || 0) - (a.episode || 0);
+      var comA = a.type === "coming" ? 1 : 0, comB = b.type === "coming" ? 1 : 0;
+      if (comA !== comB) return comA - comB;
+      return (b.number || 0) - (a.number || 0);
+    });
+  }
+
   function url(v) {
     return (v && v.indexOf("REPLACE_ME") !== 0) ? v : "";
   }
@@ -146,12 +158,12 @@
   /* ----- Home page grids ----- */
   var epGrid = document.getElementById("home-episodes");
   if (epGrid) {
-    var eps = DATA.filter(function (d) { return d.type === "episode" || d.type === "coming"; });
+    var eps = chronoSort(DATA.filter(function (d) { return d.type === "episode" || d.type === "coming"; }));
     epGrid.innerHTML = eps.map(episodeCard).join("");
   }
   var clipRow = document.getElementById("home-clips");
   if (clipRow) {
-    var clips = DATA.filter(function (d) { return d.type === "clip"; });
+    var clips = chronoSort(DATA.filter(function (d) { return d.type === "clip"; }));
     clipRow.innerHTML = clips.map(clipCard).join("");
   }
 
@@ -183,7 +195,7 @@
     function render() {
       var q = normalise(searchInput.value.trim());
       var hits = DATA.filter(function (d) { return partnerVisible(d) && matches(d, q); });
-      hits = partnerSort(hits);
+      hits = partnerSort(chronoSort(hits));
       chips.forEach(function (c) { c.classList.toggle("active", normalise(c.getAttribute("data-q")) === q); });
       if (!hits.length) {
         countEl.textContent = "";
