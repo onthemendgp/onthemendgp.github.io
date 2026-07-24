@@ -27,6 +27,11 @@ window.OTM_LINKS = {
       youtube: "https://www.youtube.com/watch?v=P2lL6DR3WQs",
       youtubeId: "P2lL6DR3WQs",
       spotify: "https://open.spotify.com/episode/3hX3Ja4aG8X4DmXa0hGBHZ"
+    },
+    ep3: {
+      youtube: "https://www.youtube.com/watch?v=YREdgZTmzaA",
+      youtubeId: "YREdgZTmzaA",
+      spotify: "https://open.spotify.com/episode/5N6nZACfIdgkq2rCMZxCIv"
     }
   },
 
@@ -41,6 +46,10 @@ window.OTM_LINKS = {
     "signs-struggling": "https://youtube.com/shorts/mVmhK7ivCrE",
     "health-checks-age": "https://youtube.com/shorts/SR9-Ugd-bZI",
     "small-changes": "https://youtube.com/shorts/9JBLQ_aapbI",
-    "mens-health-overlooked": "https://youtube.com/shorts/FkZLP0z2fKU"
+    "mens-health-overlooked": "https://youtube.com/shorts/FkZLP0z2fKU",
+    "protect-your-hearing": "https://youtube.com/shorts/1wOlYVCP_gI",
+    "hearing-check-involves": "https://youtube.com/shorts/tYLY4LZEXZE",
+    "hearing-checks-matter": "https://youtube.com/shorts/_LlJBxN8DcU",
+    "earbuds-hearing": "https://youtube.com/shorts/pOBqrh-4Les"
   }
 };

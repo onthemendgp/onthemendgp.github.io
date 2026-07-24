@@ -39,18 +39,19 @@ window.OTM_DATA = [
   },
   {
     id: "ep3",
-    type: "coming",
+    type: "episode",
     number: 3,
-    title: "Hearing Australia",
+    title: "Hearing Health with Hearing Australia",
+    page: "/episodes/hearing-health/",
     guest: "Rebecca Bourke",
     clinic: "Hearing Australia",
     suburb: "",
     guestCredit: "Rebecca Bourke, Community Service Advisor at Hearing Australia",
-    image: "",
+    image: "/assets/img/ep3.jpg",
     region: "South East VIC",
     description: "Why hearing checks matter, the early signs of hearing loss people overlook, headphones and young ears, and the support Hearing Australia provides.",
-    tags: ["Hearing", "Hearing checks", "Coming soon"],
-    keywords: "hearing loss check ears audiologist deaf headphones noise tinnitus hearing australia bourke dementia ear protection victoria melbourne south east"
+    tags: ["Hearing", "Hearing checks", "Prevention"],
+    keywords: "hearing loss check ears audiologist deaf headphones earbuds noise tinnitus hearing australia bourke ear protection volume victoria melbourne south east"
   },
 
   /* ---------------- Episode 1 clips ---------------- */
@@ -172,5 +173,59 @@ window.OTM_DATA = [
     description: "Why many men wait too long before seeing a GP, and what helps start the conversation.",
     tags: ["Men's health"],
     keywords: "mens health overlooked avoid doctor gp conversation barriers stigma"
+  },
+
+  /* ---------------- Episode 3 clips ---------------- */
+  {
+    id: "hearing-checks-matter",
+    type: "clip",
+    episode: 3,
+    title: "Why hearing checks matter",
+    guest: "Rebecca Bourke",
+    clinic: "Hearing Australia",
+    suburb: "",
+    image: "/assets/img/clip_Why-hearing-checks-matter.jpg",
+    description: "Hearing loss usually happens gradually, so it is often someone else who notices first. The early signs worth paying attention to.",
+    tags: ["Hearing", "Hearing checks"],
+    keywords: "hearing check loss early signs tv volume repeat gradual baseline"
+  },
+  {
+    id: "protect-your-hearing",
+    type: "clip",
+    episode: 3,
+    title: "Three ways to protect your hearing",
+    guest: "Rebecca Bourke",
+    clinic: "Hearing Australia",
+    suburb: "",
+    image: "/assets/img/clip_Three-ways-to-protect-your-hearing.jpg",
+    description: "Keep the volume down, protect your ears in noisy places like mowing and worksites, and get checked regularly.",
+    tags: ["Hearing", "Prevention"],
+    keywords: "protect hearing volume ear protection mowing power tools worksite noise habits"
+  },
+  {
+    id: "earbuds-hearing",
+    type: "clip",
+    episode: 3,
+    title: "Are your earbuds damaging your hearing?",
+    guest: "Rebecca Bourke",
+    clinic: "Hearing Australia",
+    suburb: "",
+    image: "/assets/img/clip_Are-your-earbuds-damaging-your-hearing.jpg",
+    description: "Hearing loss is not just for older people. More younger people are being affected, often through earbuds and headphones.",
+    tags: ["Hearing", "Young people"],
+    keywords: "earbuds headphones young people volume music hearing loss damage"
+  },
+  {
+    id: "hearing-check-involves",
+    type: "clip",
+    episode: 3,
+    title: "What a hearing check actually involves",
+    guest: "Rebecca Bourke",
+    clinic: "Hearing Australia",
+    suburb: "",
+    image: "/assets/img/clip_What-a-hearing-check-actually-involves.jpg",
+    description: "Quick, straightforward and nothing to feel nervous about. What to expect and why a baseline is useful.",
+    tags: ["Hearing checks"],
+    keywords: "hearing check test what happens involves quick non invasive baseline audiologist"
   }
 ];
