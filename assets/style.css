@@ -450,3 +450,27 @@ h3 { font-size: 1.25rem; }
 .transcript .tx-body { margin-top: 24px; font-size: .96rem; line-height: 1.7; color: var(--navy); }
 .transcript .tx-body p { margin: 0 0 16px; }
 .transcript .tx-body .sp { font-weight: 700; color: var(--coral); }
+
+
+/* ---------- Episode chapters ("Jump to a moment") ---------- */
+.chapters-wrap { max-width: 900px; margin: 30px auto 0; }
+.chapters-wrap .eyebrow { display: block; margin-bottom: 14px; }
+.chapters {
+  list-style: none; padding: 0; margin: 0;
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px 22px;
+}
+.chapters a {
+  display: flex; align-items: baseline; gap: 12px;
+  padding: 9px 10px; border-radius: 10px;
+  text-decoration: none; color: var(--navy);
+  transition: background .18s ease, transform .18s ease;
+}
+.chapters a:hover { background: rgba(137,186,179,.16); transform: translateX(2px); }
+.chapters .ch-t {
+  flex-shrink: 0; font-variant-numeric: tabular-nums; font-weight: 700;
+  font-size: .82rem; color: var(--coral); min-width: 44px;
+}
+.chapters .ch-n { font-size: .94rem; line-height: 1.45; }
+@media (max-width: 720px) {
+  .chapters { grid-template-columns: 1fr; }
+}
