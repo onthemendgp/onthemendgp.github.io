@@ -93,7 +93,7 @@
         "</div></article>";
     }
     return '<article class="card reveal">' +
-      '<a class="card-media"' + (item.page ? ' href="' + item.page + '"' : ' data-out href="' + yt + '"') + '><img loading="lazy" src="' + item.image + '" alt="Episode ' + item.number + ": " + item.title + '">' + playSvg + "</a>" +
+      '<a class="card-media"' + (item.page ? ' href="' + item.page + '"' : ' data-out href="' + yt + '"') + '><img loading="lazy" src="' + item.image + '" alt="On The Mend, an Australian GP podcast: episode ' + item.number + ", " + item.title + '">' + playSvg + "</a>" +
       '<div class="card-body">' +
       '<span class="card-meta">Episode ' + item.number + " · Full episode</span>" +
       "<h3>" + (item.page ? '<a href="' + item.page + '">' + item.title + '</a>' : item.title) + "</h3>" +
