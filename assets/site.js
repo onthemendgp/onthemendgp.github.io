@@ -52,6 +52,13 @@
   function clipLink(id) {
     return url((L.clips || {})[id]) || platform("youtube");
   }
+  /* page URL for an episode number, if that episode has a show-notes page */
+  function episodePage(num) {
+    for (var i = 0; i < DATA.length; i++) {
+      if (DATA[i].type === "episode" && DATA[i].number === num && DATA[i].page) return DATA[i].page;
+    }
+    return "";
+  }
 
   /* ----- Populate any element with data-link="youtube|spotify|instagram|facebook|tiktok|email" ----- */
   document.querySelectorAll("[data-link]").forEach(function (a) {
@@ -125,7 +132,9 @@
     return '<article class="card reveal">' +
       '<a class="card-media" data-out href="' + link + '" style="aspect-ratio:16/10"><img loading="lazy" src="' + item.image + '" alt="' + item.title + '" style="object-position:top">' + playSvg + "</a>" +
       '<div class="card-body">' +
-      '<span class="card-meta">Short clip · From episode ' + item.episode + "</span>" +
+      '<span class="card-meta">Short clip &middot; ' + (episodePage(item.episode)
+        ? '<a href="' + episodePage(item.episode) + '">From episode ' + item.episode + "</a>"
+        : "From episode " + item.episode) + "</span>" +
       "<h3>" + item.title + "</h3>" +
       '<p class="card-desc">' + item.description + "</p>" +
       '<p class="card-guest">With ' + item.guest + "</p>" +
@@ -203,12 +212,26 @@
           '<p>Try a different keyword, like skin checks, men\'s health or hearing. New topics are added with every episode.</p></div>';
         return;
       }
-      var epsCount = hits.filter(function (h) { return h.type !== "clip"; }).length;
-      var clipCount = hits.length - epsCount;
+      var eps = hits.filter(function (h) { return h.type !== "clip"; });
+      var clips = hits.filter(function (h) { return h.type === "clip"; });
       countEl.textContent = q
         ? hits.length + " result" + (hits.length === 1 ? "" : "s") + " for \"" + searchInput.value.trim() + "\""
-        : "Showing all " + epsCount + " episodes and " + clipCount + " clips";
-      resultsEl.innerHTML = '<div class="grid grid-3">' + hits.map(searchCard).join("") + "</div>";
+        : "Showing all " + eps.length + " episodes and " + clips.length + " clips";
+
+      function group(label, note, list) {
+        if (!list.length) return "";
+        return '<div class="result-group">' +
+          '<div class="group-head">' +
+          "<h2>" + label + ' <span class="group-count">' + list.length + "</span></h2>" +
+          "<p>" + note + "</p>" +
+          "</div>" +
+          '<div class="grid grid-3">' + list.map(searchCard).join("") + "</div>" +
+          "</div>";
+      }
+
+      resultsEl.innerHTML =
+        group("Full episodes", "The complete conversations, usually 10 to 15 minutes.", eps) +
+        group("Short clips", "One or two minute highlights pulled from the episodes above.", clips);
       wireOutLinks(resultsEl);
       resultsEl.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("visible"); });
     }

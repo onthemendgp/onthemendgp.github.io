@@ -474,3 +474,29 @@ h3 { font-size: 1.25rem; }
 @media (max-width: 720px) {
   .chapters { grid-template-columns: 1fr; }
 }
+
+
+/* ---------- Grouped search results (Episodes page) ---------- */
+.result-group + .result-group { margin-top: 64px; }
+.group-head {
+  display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 16px;
+  padding-bottom: 16px; margin-bottom: 30px;
+  border-bottom: 1px solid rgba(33,71,103,.14);
+}
+.group-head h2 {
+  font-family: var(--serif); font-size: 1.5rem; font-weight: 600;
+  margin: 0; color: var(--navy);
+}
+.group-head .group-count {
+  display: inline-block; margin-left: 4px;
+  font-family: var(--sans); font-size: .78rem; font-weight: 700;
+  color: var(--coral); background: rgba(254,123,110,.13);
+  border-radius: 999px; padding: 3px 10px; vertical-align: middle;
+}
+.group-head p { margin: 0; font-size: .92rem; opacity: .68; }
+.clip-card .card-meta a, .card-meta a { color: var(--coral); text-decoration: none; font-weight: 700; }
+.card-meta a:hover { text-decoration: underline; }
+@media (max-width: 720px) {
+  .group-head { display: block; }
+  .group-head p { margin-top: 6px; }
+}
