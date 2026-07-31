@@ -2,7 +2,9 @@
    ON THE MEND – EPISODE + CLIP DATA
    Used by the search on /episodes/ and the grids on index.html.
    "keywords" are searchable but not displayed. "tags" are displayed.
-   "region" shows as a location tag and powers future region filters.
+   "suburb" + "state" render as one location tag (e.g. "Chelsea, VIC") and are
+   searchable independently, so you can filter by suburb or by state as the show grows.
+   Leave "suburb" empty for content that is not tied to one suburb.
    ========================================================= */
 window.OTM_DATA = [
   {
@@ -16,7 +18,7 @@ window.OTM_DATA = [
     suburb: "Chelsea",
     guestCredit: "Dr Geoffrey Kimanje, who practises at Chelsea Arcade Medical",
     image: "/assets/img/ep2.jpg",
-    region: "South East VIC",
+    state: "VIC",
     description: "Why men's health often gets overlooked, the health checks that change with age, signs someone might be struggling, and the small changes that add up.",
     tags: ["Men's health", "Mental health", "Health checks", "Prevention"],
     keywords: "mens health men male mental health depression struggling signs checkup check up blood pressure bowel screening cancer 45 exercise weight prostate wellbeing lifestyle GP doctor kimanje chelsea arcade prevention victoria melbourne south east"
@@ -32,7 +34,7 @@ window.OTM_DATA = [
     suburb: "Chelsea",
     guestCredit: "Dr Ross Wines, who practises at Chelsea Arcade Medical",
     image: "/assets/img/ep1.jpg",
-    region: "South East VIC",
+    state: "VIC",
     description: "Why Australia sees so much skin cancer, how to protect your skin, what the SCAN self-check looks for, and what happens in a professional skin check.",
     tags: ["Skin checks", "Skin cancer", "Sun safety", "Early detection"],
     keywords: "skin check cancer melanoma mole spot sun safety uv index sunscreen slip slop slap seek slide scan self check early detection prevention wines chelsea arcade dermatology full body victoria melbourne south east"
@@ -48,7 +50,7 @@ window.OTM_DATA = [
     suburb: "",
     guestCredit: "Rebecca Bourke, Community Service Advisor at Hearing Australia",
     image: "/assets/img/ep3.jpg",
-    region: "South East VIC",
+    state: "VIC",
     description: "Why hearing checks matter, the early signs of hearing loss people overlook, headphones and young ears, and the support Hearing Australia provides.",
     tags: ["Hearing", "Hearing checks", "Prevention"],
     keywords: "hearing loss check ears audiologist deaf headphones earbuds noise tinnitus hearing australia bourke ear protection volume victoria melbourne south east"
@@ -63,7 +65,7 @@ window.OTM_DATA = [
     suburb: "",
     guestCredit: "one of the receptionists who keep the front desk running",
     image: "",
-    region: "South East VIC",
+    state: "VIC",
     description: "What really happens behind the front desk: the calls, the juggling, and the person who holds a GP clinic together. An honest look at reception.",
     tags: ["Behind the scenes", "Reception", "Coming soon"],
     keywords: "receptionist reception front desk day in the life behind the scenes phones bookings appointments clinic team medical practice"
@@ -78,6 +80,7 @@ window.OTM_DATA = [
     guest: "Dr Ross Wines",
     clinic: "Chelsea Arcade Medical",
     suburb: "Chelsea",
+    state: "VIC",
     image: "/assets/img/clip_Three-simple-ways-to-lower-your-skin-can.jpg",
     description: "Check the daily UV index, follow Slip Slop Slap Seek Slide, and get to know your own skin.",
     tags: ["Skin cancer", "Sun safety"],
@@ -91,6 +94,7 @@ window.OTM_DATA = [
     guest: "Dr Ross Wines",
     clinic: "Chelsea Arcade Medical",
     suburb: "Chelsea",
+    state: "VIC",
     image: "/assets/img/clip_Are-you-safer-from-skin-cancer-down-sout.jpg",
     description: "Why outdoor workers face higher sun exposure wherever they live in Australia.",
     tags: ["Skin cancer", "Outdoor workers"],
@@ -104,6 +108,7 @@ window.OTM_DATA = [
     guest: "Dr Ross Wines",
     clinic: "Chelsea Arcade Medical",
     suburb: "Chelsea",
+    state: "VIC",
     image: "/assets/img/clip_Why-a-small-spot-can-still-be-serious.jpg",
     description: "A spot does not have to be large to be worth checking. Sore, changing, abnormal or new: see your GP.",
     tags: ["Melanoma", "Early detection"],
@@ -117,6 +122,7 @@ window.OTM_DATA = [
     guest: "Dr Ross Wines",
     clinic: "Chelsea Arcade Medical",
     suburb: "Chelsea",
+    state: "VIC",
     image: "/assets/img/clip_Spot-check-vs-full-body-skin-check.jpg",
     description: "What the difference is and when each one makes sense.",
     tags: ["Skin checks"],
@@ -130,6 +136,7 @@ window.OTM_DATA = [
     guest: "Dr Ross Wines",
     clinic: "Chelsea Arcade Medical",
     suburb: "Chelsea",
+    state: "VIC",
     image: "/assets/img/clip_What-led-this-GP-to-skin-cancer-medicine.jpg",
     description: "The story behind one GP's path into skin cancer medicine.",
     tags: ["Behind the scenes"],
@@ -145,6 +152,7 @@ window.OTM_DATA = [
     guest: "Dr Geoffrey Kimanje",
     clinic: "Chelsea Arcade Medical",
     suburb: "Chelsea",
+    state: "VIC",
     image: "/assets/img/clip_Signs-a-man-might-be-struggling.jpg",
     description: "Men's mental health does not always look the way you might expect. Signs worth noticing, in yourself or someone you care about.",
     tags: ["Mental health", "Men's health"],
@@ -158,6 +166,7 @@ window.OTM_DATA = [
     guest: "Dr Geoffrey Kimanje",
     clinic: "Chelsea Arcade Medical",
     suburb: "Chelsea",
+    state: "VIC",
     image: "/assets/img/clip_The-health-checks-that-change-with-age.jpg",
     description: "From blood pressure checks to bowel cancer screening from age 45: a simple guide to where health checks start.",
     tags: ["Health checks", "Men's health"],
@@ -171,6 +180,7 @@ window.OTM_DATA = [
     guest: "Dr Geoffrey Kimanje",
     clinic: "Chelsea Arcade Medical",
     suburb: "Chelsea",
+    state: "VIC",
     image: "/assets/img/clip_Small-changes-for-a-healthier-you.jpg",
     description: "About 150 minutes of exercise a week, steady steps with weight, and staying connected.",
     tags: ["Prevention", "Lifestyle"],
@@ -184,6 +194,7 @@ window.OTM_DATA = [
     guest: "Dr Geoffrey Kimanje",
     clinic: "Chelsea Arcade Medical",
     suburb: "Chelsea",
+    state: "VIC",
     image: "/assets/img/clip_Why-mens-health-often-gets-overlooked.jpg",
     description: "Why many men wait too long before seeing a GP, and what helps start the conversation.",
     tags: ["Men's health"],
@@ -199,6 +210,7 @@ window.OTM_DATA = [
     guest: "Rebecca Bourke",
     clinic: "Hearing Australia",
     suburb: "",
+    state: "VIC",
     image: "/assets/img/clip_Why-hearing-checks-matter.jpg",
     description: "Hearing loss usually happens gradually, so it is often someone else who notices first. The early signs worth paying attention to.",
     tags: ["Hearing", "Hearing checks"],
@@ -212,6 +224,7 @@ window.OTM_DATA = [
     guest: "Rebecca Bourke",
     clinic: "Hearing Australia",
     suburb: "",
+    state: "VIC",
     image: "/assets/img/clip_Three-ways-to-protect-your-hearing.jpg",
     description: "Keep the volume down, protect your ears in noisy places like mowing and worksites, and get checked regularly.",
     tags: ["Hearing", "Prevention"],
@@ -225,6 +238,7 @@ window.OTM_DATA = [
     guest: "Rebecca Bourke",
     clinic: "Hearing Australia",
     suburb: "",
+    state: "VIC",
     image: "/assets/img/clip_Are-your-earbuds-damaging-your-hearing.jpg",
     description: "Hearing loss is not just for older people. More younger people are being affected, often through earbuds and headphones.",
     tags: ["Hearing", "Young people"],
@@ -238,6 +252,7 @@ window.OTM_DATA = [
     guest: "Rebecca Bourke",
     clinic: "Hearing Australia",
     suburb: "",
+    state: "VIC",
     image: "/assets/img/clip_What-a-hearing-check-actually-involves.jpg",
     description: "Quick, straightforward and nothing to feel nervous about. What to expect and why a baseline is useful.",
     tags: ["Hearing checks"],

@@ -76,11 +76,27 @@
   /* ----- Card templates ----- */
   var playSvg = '<span class="play"><span class="play-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></span>';
 
+  var STATE_NAMES = { VIC: "Victoria", NSW: "New South Wales", QLD: "Queensland",
+    SA: "South Australia", WA: "Western Australia", TAS: "Tasmania",
+    NT: "Northern Territory", ACT: "Australian Capital Territory" };
+
+  /* One readable chip: "Chelsea, VIC", or just "VIC" when not tied to a suburb */
+  function locationLabel(item) {
+    if (item.suburb && item.state) return item.suburb + ", " + item.state;
+    return item.suburb || item.state || "";
+  }
+
+  /* Suburb, state code and full state name are all searchable */
+  function locationTerms(item) {
+    return [item.suburb || "", item.state || "", STATE_NAMES[item.state] || ""].join(" ");
+  }
+
   function tagRow(item) {
     var html = "";
     if (isFeatured(item)) html += '<span class="tag tag-yours">Your clinic\'s doctor</span>';
     html += item.tags.map(function (t) { return '<span class="tag">' + t + "</span>"; }).join("");
-    if (item.region) html += '<span class="tag tag-loc">' + item.region + "</span>";
+    var loc = locationLabel(item);
+    if (loc) html += '<span class="tag tag-loc">' + loc + "</span>";
     return '<div class="tag-row">' + html + "</div>";
   }
 
@@ -197,7 +213,7 @@
 
     function matches(item, q) {
       if (!q) return true;
-      var hay = normalise(item.title + " " + (item.guest || "") + " " + item.description + " " + item.tags.join(" ") + " " + (item.region || "") + " " + (item.keywords || ""));
+      var hay = normalise(item.title + " " + (item.guest || "") + " " + item.description + " " + item.tags.join(" ") + " " + locationTerms(item) + " " + (item.keywords || ""));
       return q.split(/\s+/).every(function (word) { return hay.indexOf(word) !== -1; });
     }
 
