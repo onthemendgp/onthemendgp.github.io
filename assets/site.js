@@ -281,5 +281,73 @@
   }, { threshold: 0.12 });
   document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
 
+  /* ----- Short clip lightbox: play Shorts on the site instead of leaving ----- */
+  (function shortsPlayer() {
+    var SHORT_RE = /(?:youtube\.com\/shorts\/|youtu\.be\/)([A-Za-z0-9_-]{6,})/;
+    var modal, frame, ytLink, titleEl, lastFocus;
+
+    function build() {
+      modal = document.createElement("div");
+      modal.className = "short-modal";
+      modal.setAttribute("role", "dialog");
+      modal.setAttribute("aria-modal", "true");
+      modal.setAttribute("aria-label", "Short clip player");
+      modal.innerHTML =
+        '<div class="sm-backdrop"></div>' +
+        '<div class="sm-box">' +
+        '<button class="sm-close" type="button" aria-label="Close clip">&times;</button>' +
+        '<div class="sm-frame"></div>' +
+        '<div class="sm-foot"><p class="sm-title"></p>' +
+        '<a class="sm-yt" target="_blank" rel="noopener">Watch on YouTube</a></div>' +
+        "</div>";
+      document.body.appendChild(modal);
+      frame = modal.querySelector(".sm-frame");
+      ytLink = modal.querySelector(".sm-yt");
+      titleEl = modal.querySelector(".sm-title");
+      modal.querySelector(".sm-close").addEventListener("click", close);
+      modal.querySelector(".sm-backdrop").addEventListener("click", close);
+    }
+
+    function open(id, href, title) {
+      if (!modal) build();
+      lastFocus = document.activeElement;
+      titleEl.textContent = title || "";
+      ytLink.href = href;
+      frame.innerHTML =
+        '<iframe src="https://www.youtube-nocookie.com/embed/' + id +
+        '?autoplay=1&rel=0&playsinline=1" title="' + (title || "Short clip") +
+        '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"' +
+        " allowfullscreen></iframe>";
+      modal.classList.add("open");
+      document.body.style.overflow = "hidden";
+      modal.querySelector(".sm-close").focus();
+    }
+
+    function close() {
+      if (!modal) return;
+      modal.classList.remove("open");
+      frame.innerHTML = "";               /* stops playback */
+      document.body.style.overflow = "";
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && modal && modal.classList.contains("open")) close();
+    });
+
+    /* Delegated so it also covers cards rendered later by the search */
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest ? e.target.closest("a") : null;
+      if (!a || !a.href) return;
+      var m = SHORT_RE.exec(a.href);
+      if (!m) return;
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;  /* let people open in a new tab */
+      e.preventDefault();
+      var card = a.closest(".card");
+      var h = card && card.querySelector("h3");
+      open(m[1], a.href, h ? h.textContent.trim() : "");
+    });
+  })();
+
   wireOutLinks(document);
 })();
