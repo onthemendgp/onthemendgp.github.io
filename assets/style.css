@@ -363,7 +363,7 @@ h3 { font-size: 1.25rem; }
 
 /* ---------- Footer ---------- */
 .site-footer { background: var(--navy-deep); color: rgba(232, 241, 232, .8); padding: 64px 0 36px; }
-.footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 44px; margin-bottom: 44px; }
+.footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 44px; }
 .site-footer h4 { color: var(--offwhite); font-family: var(--font-display); margin-bottom: 14px; font-size: 1.05rem; }
 .site-footer ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
 .site-footer a:hover { color: var(--coral); }
@@ -549,3 +549,8 @@ h3 { font-size: 1.25rem; }
   .sm-frame { width: min(70vh * 0.5625, 96vw); max-height: 70vh; }
   .sm-close { top: -42px; right: 0; }
 }
+
+.plain-list { list-style: none; padding: 0; margin: 0; }
+.plain-list li { padding: 12px 0; border-bottom: 1px solid rgba(33,71,103,.1); font-size: .95rem; }
+.plain-list a { color: var(--navy); font-weight: 700; text-decoration: none; }
+.plain-list a:hover { color: var(--coral); }
