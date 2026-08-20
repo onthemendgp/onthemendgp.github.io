@@ -210,6 +210,28 @@ const hub =
   group("Short clips", "One or two minute highlights pulled from the episodes above.", clips);
 console.log(replaceBlock("episodes/index.html", "episode-list", hub) ? "  ok  episodes/index.html episode-list" : "  !!  episodes hub marker missing");
 
+/* episodes hub: CollectionPage describing the library, with an ordered ItemList */
+const collection = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "All episodes and clips",
+  url: SITE + "/episodes/",
+  description: "Every episode and clip of On The Mend, an Australian GP podcast for patients.",
+  isPartOf: { "@type": "PodcastSeries", name: "On The Mend", url: SITE + "/" },
+  mainEntity: {
+    "@type": "ItemList",
+    numberOfItems: published.length,
+    itemListOrder: "https://schema.org/ItemListOrderDescending",
+    itemListElement: published.map((e, i) => ({
+      "@type": "ListItem", position: i + 1, url: SITE + e.page, name: e.title
+    }))
+  }
+};
+console.log(replaceBlock("episodes/index.html", "episodes-schema",
+  '<script type="application/ld+json">' + JSON.stringify(collection) + "</script>")
+  ? "  ok  episodes/index.html CollectionPage schema (" + published.length + " episodes)"
+  : "  !!  episodes-schema marker missing");
+
 /* footer: newest few episodes, on every page */
 const footerHtml = published.slice(0, FOOTER_EPISODES)
   .map((e) => '<li><a href="' + e.page + '">' + (e.short || shortTitle(e.title)) + "</a></li>").join("") +
