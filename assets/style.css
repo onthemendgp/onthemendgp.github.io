@@ -554,3 +554,17 @@ h3 { font-size: 1.25rem; }
 .plain-list li { padding: 12px 0; border-bottom: 1px solid rgba(33,71,103,.1); font-size: .95rem; }
 .plain-list a { color: var(--navy); font-weight: 700; text-decoration: none; }
 .plain-list a:hover { color: var(--coral); }
+
+/* ---------- Episode page clip grid ---------- */
+/* auto-fit collapses unused tracks, so the row always fills:
+   4 clips sit 4 across, 5 clips sit 5 across, no orphan on a new line. */
+.clip-grid {
+  display: grid; gap: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+}
+@media (max-width: 900px) {
+  .clip-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 18px; }
+}
+@media (max-width: 560px) {
+  .clip-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+}

@@ -55,6 +55,8 @@ at the top and click **Request indexing**.
   video result
 - Chapters in `hasPart`, with the last `endOffset` equal to the real runtime
 - The embedded video, key takeaways, guest bio, clips, related episodes
+- Wrap the short clips in `<div class="clip-grid">`, not `grid grid-3`. The clip grid
+  auto-fits, so four clips sit four across and five sit five across with no orphan card
 - The collapsed transcript at the bottom
 - The disclaimer. Mental health topics also carry Lifeline 13 11 14
 
