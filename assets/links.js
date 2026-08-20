@@ -32,6 +32,11 @@ window.OTM_LINKS = {
       youtube: "https://www.youtube.com/watch?v=YREdgZTmzaA",
       youtubeId: "YREdgZTmzaA",
       spotify: "https://open.spotify.com/episode/5N6nZACfIdgkq2rCMZxCIv"
+    },
+    ep4: {
+      youtube: "https://www.youtube.com/watch?v=cgZ4tz67rt8",
+      youtubeId: "cgZ4tz67rt8",
+      spotify: "https://open.spotify.com/episode/2RXRDWQKdvnqM9xv5kdffp"
     }
   },
 
@@ -50,6 +55,10 @@ window.OTM_LINKS = {
     "protect-your-hearing": "https://youtube.com/shorts/1wOlYVCP_gI",
     "hearing-check-involves": "https://youtube.com/shorts/tYLY4LZEXZE",
     "hearing-checks-matter": "https://youtube.com/shorts/_LlJBxN8DcU",
-    "earbuds-hearing": "https://youtube.com/shorts/pOBqrh-4Les"
+    "earbuds-hearing": "https://youtube.com/shorts/pOBqrh-4Les",
+    "receptionist-really-does": "https://youtube.com/shorts/j1mtCpeyrfU",
+    "results-doctor-first": "https://youtube.com/shorts/WSSygYoKA-8",
+    "surprise-a-doctor": "https://youtube.com/shorts/7SlZ6QxlwQg",
+    "small-act-of-care": "https://youtube.com/shorts/Bg61sskf2ac"
   }
 };

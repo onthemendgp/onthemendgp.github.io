@@ -5,6 +5,8 @@
    "suburb" + "state" render as one location tag (e.g. "Chelsea, VIC") and are
    searchable independently, so you can filter by suburb or by state as the show grows.
    Leave "suburb" empty for content that is not tied to one suburb.
+   "short" is an optional footer label. Without it the footer trims the title
+   at a colon, comma or " with ".
    ========================================================= */
 window.OTM_DATA = [
   {
@@ -57,18 +59,20 @@ window.OTM_DATA = [
   },
   {
     id: "ep4",
-    type: "coming",
+    type: "episode",
     number: 4,
+    page: "/episodes/medical-receptionist/",
     title: "A Day in the Life of a Receptionist",
-    guest: "Reception team",
-    clinic: "",
-    suburb: "",
-    guestCredit: "one of the receptionists who keep the front desk running",
-    image: "",
+    short: "Front Desk",
+    guest: "Emily Ryan",
+    clinic: "Chelsea Arcade Medical",
+    suburb: "Chelsea",
+    guestCredit: "Emily Ryan, medical receptionist",
+    image: "/assets/img/ep4.jpg",
     state: "VIC",
-    description: "What really happens behind the front desk: the calls, the juggling, and the person who holds a GP clinic together. An honest look at reception.",
-    tags: ["Behind the scenes", "Reception", "Coming soon"],
-    keywords: "receptionist reception front desk day in the life behind the scenes phones bookings appointments clinic team medical practice"
+    description: "What really happens behind the front desk: the referrals and records that keep your care moving, why your results go to your doctor first, and why kindness matters on a busy morning.",
+    tags: ["Behind the scenes", "Reception", "Test results"],
+    keywords: "receptionist medical receptionist reception front desk day in the life behind the scenes phones bookings appointments referrals records test results pathology results medical records healthcare admin emily ryan clinic team medical practice chelsea victoria melbourne"
   },
 
   /* ---------------- Episode 1 clips ---------------- */
@@ -257,5 +261,63 @@ window.OTM_DATA = [
     description: "Quick, straightforward and nothing to feel nervous about. What to expect and why a baseline is useful.",
     tags: ["Hearing checks"],
     keywords: "hearing check test what happens involves quick non invasive baseline audiologist"
+  },
+
+  /* ---------------- Episode 4 clips ---------------- */
+  {
+    id: "receptionist-really-does",
+    type: "clip",
+    episode: 4,
+    title: "What a medical receptionist really does",
+    guest: "Emily Ryan",
+    clinic: "Chelsea Arcade Medical",
+    suburb: "Chelsea",
+    state: "VIC",
+    image: "/assets/img/clip_What-a-medical-receptionist-really-does.jpg",
+    description: "There is a lot more to the front desk than checking you in and answering the phone. The work that happens out of sight.",
+    tags: ["Behind the scenes", "Reception"],
+    keywords: "medical receptionist front desk referrals records specialists allied health behind the scenes healthcare admin"
+  },
+  {
+    id: "results-doctor-first",
+    type: "clip",
+    episode: 4,
+    title: "Why your results go to your doctor first",
+    guest: "Emily Ryan",
+    clinic: "Chelsea Arcade Medical",
+    suburb: "Chelsea",
+    state: "VIC",
+    image: "/assets/img/clip_Why-your-results-go-to-your-doctor-first.jpg",
+    description: "Ever wondered why results are not sent straight to you? The step in between, and why your doctor checks the result first.",
+    tags: ["Test results", "Reception"],
+    keywords: "test results pathology results blood test scan why doctor checks first medical records patient privacy release of results"
+  },
+  {
+    id: "surprise-a-doctor",
+    type: "clip",
+    episode: 4,
+    title: "What would surprise a doctor about reception",
+    guest: "Emily Ryan",
+    clinic: "Chelsea Arcade Medical",
+    suburb: "Chelsea",
+    state: "VIC",
+    image: "/assets/img/clip_What-would-surprise-a-doctor-about-recep.jpg",
+    description: "The sheer amount happening at once on a busy morning, and why the pace never really lets up.",
+    tags: ["Behind the scenes", "Reception"],
+    keywords: "medical receptionist multitasking busy day phones ringing emails specialists bookings pace healthcare admin"
+  },
+  {
+    id: "small-act-of-care",
+    type: "clip",
+    episode: 4,
+    title: "A small act of care at the front desk",
+    guest: "Emily Ryan",
+    clinic: "Chelsea Arcade Medical",
+    suburb: "Chelsea",
+    state: "VIC",
+    image: "/assets/img/clip_A-small-act-of-care-at-the-front-desk.jpg",
+    description: "Sometimes the smallest bit of help means the most. The moment a patient came back to say thank you.",
+    tags: ["Reception", "Patient care"],
+    keywords: "kindness patient care gratitude medical receptionist front desk helping patients medical records"
   }
 ];

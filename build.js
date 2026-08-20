@@ -150,7 +150,7 @@ function clipCardFull(item) {
     "</div></article>";
 }
 
-/* Footer labels stay short: cut at a colon, comma, or " with " */
+/* Footer labels stay short: use episode.short if set, else cut at a colon, comma or " with " */
 function shortTitle(t) {
   return t.replace(/\s+with\s+.*$/i, "").replace(/[:,].*$/, "").trim();
 }
@@ -212,7 +212,7 @@ console.log(replaceBlock("episodes/index.html", "episode-list", hub) ? "  ok  ep
 
 /* footer: newest few episodes, on every page */
 const footerHtml = published.slice(0, FOOTER_EPISODES)
-  .map((e) => '<li><a href="' + e.page + '">' + shortTitle(e.title) + "</a></li>").join("") +
+  .map((e) => '<li><a href="' + e.page + '">' + (e.short || shortTitle(e.title)) + "</a></li>").join("") +
   '<li><a href="/episodes/">All episodes</a></li>';
 let footers = 0;
 for (const f of allPages()) if (replaceBlock(f, "footer-episodes", footerHtml)) footers++;
