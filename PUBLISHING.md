@@ -19,6 +19,16 @@ In `assets/episodes.js`, add the episode object (copy an existing one). Fields:
 | `clinic`, `suburb`, `state` | `suburb` may be empty when not tied to one place. `state` drives the location tag |
 | `image` | `/assets/img/epN.jpg` |
 | `description`, `tags`, `keywords` | `keywords` are searchable but never displayed |
+| `short` | the short label used in the footer, e.g. "GP Appointments" |
+| `topic` | finishes the sentence "<guest> on ..." in the FAQ guest answer |
+| `published` | the YouTube release date. Feeds `datePublished` in the episode schema |
+
+For each clip, add `release` if the Short is scheduled, written as
+`"2026-10-16T19:00:00+11:00"`. The clip stays hidden everywhere on the site until
+that moment, then appears on its own. No rebuild or push is needed on the day.
+
+For the next episode, add a `"coming"` entry (no `page`). It shows as the
+"Coming next" band on the home page and as a teaser card on the episodes page.
 
 In `assets/links.js`, add the YouTube and Spotify URLs under the same `id`,
 plus any clip URLs.
@@ -30,8 +40,9 @@ node build.js
 node verify-build.js
 ```
 
-`build.js` writes the episode cards, the footer links and the sitemap into the
-HTML. `verify-build.js` confirms the generated HTML matches what `site.js`
+`build.js` writes the navigation, the episode cards, the coming next band, the
+footer links, each episode page's clips and "More episodes", the About guest
+list, the FAQ guest answer and FAQ schema, and the sitemap into the HTML. `verify-build.js` confirms the generated HTML matches what `site.js`
 renders at runtime, so the page cannot flicker or drift.
 
 **3. Commit and push**
@@ -55,10 +66,19 @@ at the top and click **Request indexing**.
   video result
 - Chapters in `hasPart`, with the last `endOffset` equal to the real runtime
 - The embedded video, key takeaways, guest bio, clips, related episodes
-- Wrap the short clips in `<div class="clip-grid">`, not `grid grid-3`. The clip grid
-  auto-fits, so four clips sit four across and five sit five across with no orphan card
+- Leave the clips container as `<div data-episode-clips="N"><!--BUILD:clips--><!--/BUILD:clips--></div>`
+  and the More episodes grid as `<!--BUILD:related--><!--/BUILD:related-->`. The build fills both
+- Leave the navigation as `<nav class="nav"><!--BUILD:nav--><!--/BUILD:nav--></nav>`
 - The collapsed transcript at the bottom
 - The disclaimer. Mental health topics also carry Lifeline 13 11 14
+
+## How the pieces fit
+
+- `assets/cards.js` holds every card template and list rule. Both `site.js` (in the
+  browser) and `build.js` (when you build) use it, so they cannot drift apart
+- `build.js` only rewrites files whose content actually changed, and dates each
+  sitemap entry by that page's last commit
+- `404.html` is the branded "page not found" page. GitHub Pages serves it automatically
 
 ## Why the build script exists
 

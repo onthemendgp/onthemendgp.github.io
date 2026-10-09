@@ -7,20 +7,64 @@
    Leave "suburb" empty for content that is not tied to one suburb.
    "short" is an optional footer label. Without it the footer trims the title
    at a colon, comma or " with ".
+   "topic" (episodes) finishes the sentence "<guest> on ..." in the FAQ.
+   "published" (episodes) is the YouTube release date. It feeds the sitemap and
+   the datePublished schema.
+   "release" (clips, optional) is when a scheduled Short goes public, written as
+   "2026-10-16T19:00:00+11:00". Until then the clip stays hidden everywhere on
+   the site, and it appears by itself at that time with no rebuild needed.
    ========================================================= */
 window.OTM_DATA = [
+  {
+    id: "ep6",
+    type: "coming",
+    number: 6,
+    title: "Hurt at Work? WorkCover and Occupational Health",
+    short: "Work Injuries",
+    topic: "work injuries and WorkCover",
+    guest: "Dr Vinny Lam",
+    clinic: "",
+    suburb: "",
+    guestCredit: "Dr Vinny Lam, GP",
+    image: "",
+    state: "VIC",
+    description: "What to do in the first 48 hours after a workplace injury, what a certificate of capacity is, and how WorkCover appointments work.",
+    tags: ["Occupational health", "WorkCover", "Work injuries"],
+    keywords: "workcover work cover worksafe occupational health workplace injury injured at work certificate of capacity return to work claim number insurer employer back pain carpal tunnel desk job lam gp victoria"
+  },
+  {
+    id: "ep5",
+    type: "episode",
+    number: 5,
+    page: "/episodes/making-the-most-of-your-gp-appointment/",
+    title: "Making the Most of Your GP Appointment",
+    short: "GP Appointments",
+    topic: "making the most of your GP appointment",
+    guest: "Dr Nisha Patel",
+    clinic: "Balwyn Central Medical",
+    suburb: "Balwyn",
+    guestCredit: "Dr Nisha Patel, who practises at Balwyn Central Medical",
+    image: "/assets/img/ep5.jpg",
+    state: "VIC",
+    published: "2026-10-09",
+    description: "The Medicare rules behind how appointments are booked, why a 10-minute consult goes so quickly, why your GP asks you to come back, and how a little preparation helps.",
+    tags: ["Appointments", "Medicare", "Behind the scenes"],
+    keywords: "gp appointment doctor appointment consult consultation 10 minute long appointment standard appointment medicare rules care plan telehealth mymedicare follow up results same gp continuity of care prepare list questions google running late balwyn nisha patel victoria melbourne"
+  },
   {
     id: "ep2",
     type: "episode",
     number: 2,
     page: "/episodes/mens-health/",
     title: "Men's Health: Starting the Conversation",
+    topic: "men's health",
     guest: "Dr Geoffrey Kimanje",
     clinic: "Chelsea Arcade Medical",
     suburb: "Chelsea",
     guestCredit: "Dr Geoffrey Kimanje, who practises at Chelsea Arcade Medical",
     image: "/assets/img/ep2.jpg",
     state: "VIC",
+    published: "2026-07-07",
     description: "Why men's health often gets overlooked, the health checks that change with age, signs someone might be struggling, and the small changes that add up.",
     tags: ["Men's health", "Mental health", "Health checks", "Prevention"],
     keywords: "mens health men male mental health depression struggling signs checkup check up blood pressure bowel screening cancer 45 exercise weight prostate wellbeing lifestyle GP doctor kimanje chelsea arcade prevention victoria melbourne south east"
@@ -31,12 +75,14 @@ window.OTM_DATA = [
     number: 1,
     page: "/episodes/skin-checks-early-detection/",
     title: "Skin Checks, Early Detection & Prevention",
+    topic: "skin checks",
     guest: "Dr Ross Wines",
     clinic: "Chelsea Arcade Medical",
     suburb: "Chelsea",
     guestCredit: "Dr Ross Wines, who practises at Chelsea Arcade Medical",
     image: "/assets/img/ep1.jpg",
     state: "VIC",
+    published: "2026-06-25",
     description: "Why Australia sees so much skin cancer, how to protect your skin, what the SCAN self-check looks for, and what happens in a professional skin check.",
     tags: ["Skin checks", "Skin cancer", "Sun safety", "Early detection"],
     keywords: "skin check cancer melanoma mole spot sun safety uv index sunscreen slip slop slap seek slide scan self check early detection prevention wines chelsea arcade dermatology full body victoria melbourne south east"
@@ -47,12 +93,14 @@ window.OTM_DATA = [
     number: 3,
     title: "Hearing Health with Hearing Australia",
     page: "/episodes/hearing-health/",
+    topic: "hearing checks",
     guest: "Rebecca Bourke",
     clinic: "Hearing Australia",
     suburb: "",
     guestCredit: "Rebecca Bourke, Community Service Advisor at Hearing Australia",
     image: "/assets/img/ep3.jpg",
     state: "VIC",
+    published: "2026-07-23",
     description: "Why hearing checks matter, the early signs of hearing loss people overlook, headphones and young ears, and the support Hearing Australia provides.",
     tags: ["Hearing", "Hearing checks", "Prevention"],
     keywords: "hearing loss check ears audiologist deaf headphones earbuds noise tinnitus hearing australia bourke ear protection volume victoria melbourne south east"
@@ -64,15 +112,79 @@ window.OTM_DATA = [
     page: "/episodes/medical-receptionist/",
     title: "A Day in the Life of a Receptionist",
     short: "Front Desk",
+    topic: "life behind the front desk",
     guest: "Emily Ryan",
     clinic: "Chelsea Arcade Medical",
     suburb: "Chelsea",
     guestCredit: "Emily Ryan, medical receptionist",
     image: "/assets/img/ep4.jpg",
     state: "VIC",
+    published: "2026-08-20",
     description: "What really happens behind the front desk: the referrals and records that keep your care moving, why your results go to your doctor first, and why kindness matters on a busy morning.",
     tags: ["Behind the scenes", "Reception", "Test results"],
     keywords: "receptionist medical receptionist reception front desk day in the life behind the scenes phones bookings appointments referrals records test results pathology results medical records healthcare admin emily ryan clinic team medical practice chelsea victoria melbourne"
+  },
+
+  /* ---------------- Episode 5 clips ---------------- */
+  {
+    id: "ten-minutes",
+    type: "clip",
+    episode: 5,
+    release: "2026-10-16T19:00:00+11:00",
+    title: "Why 10 minutes goes so quickly",
+    guest: "Dr Nisha Patel",
+    clinic: "Balwyn Central Medical",
+    suburb: "Balwyn",
+    state: "VIC",
+    image: "/assets/img/clip_Why-10-minutes-goes-so-quickly.jpg",
+    description: "Your history, an examination, referrals and notes all have to fit inside a standard appointment. Why two or three issues is a safe maximum.",
+    tags: ["Appointments", "Behind the scenes"],
+    keywords: "10 minute appointment standard consult long appointment 20 minutes running late list of problems chest pain gp time"
+  },
+  {
+    id: "medicare-rules",
+    type: "clip",
+    episode: 5,
+    release: "2026-10-23T19:00:00+11:00",
+    title: "Medicare rules most patients don't know",
+    guest: "Dr Nisha Patel",
+    clinic: "Balwyn Central Medical",
+    suburb: "Balwyn",
+    state: "VIC",
+    image: "/assets/img/clip_Medicare-rules-most-patients-dont-know.jpg",
+    description: "Why a care plan and going through your results may need separate appointments, and a note on the telehealth rules.",
+    tags: ["Medicare", "Appointments"],
+    keywords: "medicare rules care plan separate appointment telehealth 12 months face to face mymedicare my health record"
+  },
+  {
+    id: "prepare-gp-appointment",
+    type: "clip",
+    episode: 5,
+    release: "2026-10-30T19:00:00+11:00",
+    title: "How to prepare for your GP appointment",
+    guest: "Dr Nisha Patel",
+    clinic: "Balwyn Central Medical",
+    suburb: "Balwyn",
+    state: "VIC",
+    image: "/assets/img/clip_How-to-prepare-for-your-GP-appointment.jpg",
+    description: "Bring your list, share what you are worried about, and tell your GP what you found online. It helps you both get on the same page.",
+    tags: ["Appointments", "Prevention"],
+    keywords: "prepare gp appointment list ideas concerns google questions what to bring doctor visit tips"
+  },
+  {
+    id: "gp-follow-up",
+    type: "clip",
+    episode: 5,
+    release: "2026-11-06T19:00:00+11:00",
+    title: "Why your GP books a follow-up",
+    guest: "Dr Nisha Patel",
+    clinic: "Balwyn Central Medical",
+    suburb: "Balwyn",
+    state: "VIC",
+    image: "/assets/img/clip_Why-your-GP-books-a-follow-up.jpg",
+    description: "Even normal results can decide the next step. Why follow-ups matter, and why seeing the same GP helps.",
+    tags: ["Test results", "Appointments"],
+    keywords: "follow up appointment results normal referral investigation treatment same gp continuity"
   },
 
   /* ---------------- Episode 1 clips ---------------- */

@@ -32,11 +32,11 @@ function el() {
 }
 
 function runSiteJs() {
-  const results = el(), count = el(), input = el(), homeEps = el(), homeClips = el();
+  const results = el(), count = el(), input = el(), homeEps = el(), homeClips = el(), homeNext = el();
   input.value = "";
   const byId = {
     "search-results": results, "results-count": count, "search-input": input,
-    "home-episodes": homeEps, "home-clips": homeClips, "now-playing": null
+    "home-episodes": homeEps, "home-clips": homeClips, "home-next": homeNext, "now-playing": null
   };
   let renderFn = null;
   input.addEventListener = (ev, fn) => { if (ev === "input") renderFn = fn; };
@@ -59,9 +59,10 @@ function runSiteJs() {
   vm.runInContext(read("assets/episodes.js"), sandbox);
   vm.runInContext(read("assets/links.js"), sandbox);
   vm.runInContext(read("assets/partners.js"), sandbox);
+  vm.runInContext(read("assets/cards.js"), sandbox);
   vm.runInContext(read("assets/site.js"), sandbox);
   if (renderFn) renderFn();
-  return { homeEps: homeEps.innerHTML, homeClips: homeClips.innerHTML, hub: results.innerHTML };
+  return { homeEps: homeEps.innerHTML, homeClips: homeClips.innerHTML, homeNext: homeNext.innerHTML, hub: results.innerHTML };
 }
 
 /* ---------- pull the static blocks back out ---------- */
@@ -78,6 +79,7 @@ const live = runSiteJs();
 const checks = [
   ["home episode cards", block("index.html", "home-episodes"), live.homeEps],
   ["home clip row", block("index.html", "home-clips"), live.homeClips],
+  ["home coming next", block("index.html", "home-next"), live.homeNext],
   ["episodes hub list", block("episodes/index.html", "episode-list"), live.hub]
 ];
 
@@ -110,7 +112,7 @@ vm.createContext(sandbox);
 vm.runInContext(read("assets/episodes.js"), sandbox);
 const pages = (sandbox.window.OTM_DATA || []).filter((d) => d.page).map((d) => d.page);
 const html = ["index.html", "about/index.html", "faq/index.html", "clinics/index.html",
-  "contact/index.html", "episodes/index.html"].map(read).join("");
+  "contact/index.html", "episodes/index.html", "404.html"].filter((f) => fs.existsSync(path.join(ROOT, f))).map(read).join("");
 for (const p of pages) {
   const n = (html.match(new RegExp('href="' + p + '"', "g")) || []).length;
   console.log((n > 0 ? "  ok  " : "  !!  ") + p + "  " + n + " static links");

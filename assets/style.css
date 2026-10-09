@@ -568,3 +568,56 @@ h3 { font-size: 1.25rem; }
 @media (max-width: 560px) {
   .clip-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
 }
+
+/* ---------- Coming next band (home) ---------- */
+#home-next:empty { display: none; }
+.next-band {
+  margin-top: 28px; display: grid; grid-template-columns: auto 1fr auto; gap: 28px; align-items: center;
+  background: var(--white); border-radius: var(--radius); padding: 22px 28px 22px 22px;
+  box-shadow: var(--shadow); border: 1.5px dashed rgba(33, 71, 103, .25);
+}
+.next-badge {
+  width: 132px; aspect-ratio: 1; border-radius: 16px; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--navy), var(--navy-dark));
+  color: var(--teal); font-family: var(--font-display); font-style: italic; font-size: 1rem;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; line-height: 1.2;
+}
+.next-badge span { display: block; color: var(--offwhite); font-style: normal; font-weight: 600; font-size: 1.25rem; margin-bottom: 4px; }
+.next-text h3 { font-family: var(--font-display); font-size: 1.35rem; margin: 4px 0 6px; line-height: 1.25; }
+.next-text p { margin: 0 0 4px; }
+.next-text .card-guest { margin-top: 6px; }
+@media (max-width: 760px) {
+  .next-band { grid-template-columns: 1fr; gap: 16px; padding: 22px; }
+  .next-badge { width: 100%; aspect-ratio: auto; padding: 18px; flex-direction: row; gap: 8px; }
+  .next-badge span { margin: 0; }
+  .next-band .btn { justify-self: start; }
+}
+
+/* ---------- Clips still to be released (episode page) ---------- */
+.clips-pending {
+  background: var(--white); border-radius: var(--radius); padding: 22px 26px;
+  border: 1.5px dashed rgba(33, 71, 103, .25); max-width: 760px;
+}
+.clips-pending a { text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---------- Guest list (about) ---------- */
+.guest-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+.guest-list li > a, .guest-list li > span {
+  display: flex; flex-direction: column; gap: 4px; height: 100%;
+  background: var(--white); border-radius: 16px; padding: 20px 22px; box-shadow: 0 6px 20px rgba(13, 43, 80, .08);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.guest-list li > a:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+.guest-list li > span { border: 1.5px dashed rgba(33, 71, 103, .25); box-shadow: none; }
+.guest-list .gl-ep { font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--coral); font-weight: 700; }
+.guest-list strong { font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; line-height: 1.25; }
+.guest-list .gl-credit { font-size: .88rem; opacity: .7; }
+.guest-list .gl-topic { font-size: .95rem; margin-top: 6px; }
+
+/* ---------- 404 ---------- */
+.notfound-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+
+/* ---------- Keyboard focus ---------- */
+a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible {
+  outline: 3px solid var(--coral); outline-offset: 3px; border-radius: 6px;
+}

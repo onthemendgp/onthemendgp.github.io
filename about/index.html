@@ -32,14 +32,15 @@
   <div class="wrap">
     <a class="brand" href="/"><img src="/assets/img/badge.png" alt="On The Mend logo">On The Mend</a>
     <button class="menu-btn" aria-label="Open menu"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
-    <nav class="nav">
+    <nav class="nav"><!--BUILD:nav-->
       <a href="/">Home</a>
       <a href="/episodes/">Episodes</a>
-      <a href="/about/" class="active">About</a>
+      <a href="/about/" class="active" aria-current="page">About</a>
       <a href="/faq/">FAQ</a>
+      <a href="/clinics/">For clinics</a>
       <a href="/contact/">Contact</a>
-      <a class="cta" data-link="youtube" href="#">Watch on YouTube</a>
-    </nav>
+      <a class="cta" data-link="youtube" href="https://www.youtube.com/@onthemendGP">Watch on YouTube</a>
+      <!--/BUILD:nav--></nav>
   </div>
 </header>
 
@@ -57,7 +58,7 @@
       <div class="reveal">
         <span class="eyebrow">The idea</span>
         <h2>Made inside real clinics</h2>
-        <p style="margin:18px 0">On The Mend started with a simple observation: patients have plenty of questions that never get asked in a 15 minute consult. Why do doctors run late? What does a care plan actually do? Why are out-of-pocket fees rising? What happens in a skin check?</p>
+        <p style="margin:18px 0">On The Mend started with a simple observation: patients have plenty of questions that never get asked in a short consult. Why do doctors run late? What does a care plan actually do? Why are out-of-pocket fees rising? What happens in a skin check?</p>
         <p style="margin-bottom:18px">So we set up microphones inside the practice and started answering them. Each episode is a short, honest conversation recorded with the people who live these questions every day.</p>
         <p>On The Mend is an independent Australian GP practice podcast for patients, made by people who work in general practice every day. It is recorded inside real, working clinics in Melbourne, and guests come from across the industry, whichever practice or service they call home.</p>
       </div>
@@ -97,6 +98,19 @@
 </section>
 
 <section class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">The guests so far</span>
+        <h2>Meet the people behind each episode</h2>
+      </div>
+      <a class="btn btn-ghost" href="/episodes/">Browse episodes</a>
+    </div>
+    <div class="reveal"><!--BUILD:guests--><ul class="guest-list"><li><a href="/episodes/making-the-most-of-your-gp-appointment/"><span class="gl-ep">Episode 5</span><strong>Dr Nisha Patel</strong><span class="gl-credit">who practises at Balwyn Central Medical</span><span class="gl-topic">Making the Most of Your GP Appointment</span></a></li><li><a href="/episodes/medical-receptionist/"><span class="gl-ep">Episode 4</span><strong>Emily Ryan</strong><span class="gl-credit">medical receptionist</span><span class="gl-topic">A Day in the Life of a Receptionist</span></a></li><li><a href="/episodes/hearing-health/"><span class="gl-ep">Episode 3</span><strong>Rebecca Bourke</strong><span class="gl-credit">Community Service Advisor at Hearing Australia</span><span class="gl-topic">Hearing Health with Hearing Australia</span></a></li><li><a href="/episodes/mens-health/"><span class="gl-ep">Episode 2</span><strong>Dr Geoffrey Kimanje</strong><span class="gl-credit">who practises at Chelsea Arcade Medical</span><span class="gl-topic">Men's Health: Starting the Conversation</span></a></li><li><a href="/episodes/skin-checks-early-detection/"><span class="gl-ep">Episode 1</span><strong>Dr Ross Wines</strong><span class="gl-credit">who practises at Chelsea Arcade Medical</span><span class="gl-topic">Skin Checks, Early Detection & Prevention</span></a></li><li><span><span class="gl-ep">Episode 6 · coming soon</span><strong>Dr Vinny Lam</strong><span class="gl-credit">GP</span><span class="gl-topic">Hurt at Work? WorkCover and Occupational Health</span></span></li></ul><!--/BUILD:guests--></div>
+  </div>
+</section>
+
+<section class="section alt">
   <div class="wrap">
     <div class="grid grid-2" style="align-items:center">
       <div class="reveal">
@@ -157,7 +171,7 @@
       </div>
       <div>
         <h4>Episodes</h4>
-        <ul><!--BUILD:footer-episodes--><li><a href="/episodes/medical-receptionist/">Front Desk</a></li><li><a href="/episodes/hearing-health/">Hearing Health</a></li><li><a href="/episodes/mens-health/">Men's Health</a></li><li><a href="/episodes/">All episodes</a></li><!--/BUILD:footer-episodes--></ul>
+        <ul><!--BUILD:footer-episodes--><li><a href="/episodes/making-the-most-of-your-gp-appointment/">GP Appointments</a></li><li><a href="/episodes/medical-receptionist/">Front Desk</a></li><li><a href="/episodes/hearing-health/">Hearing Health</a></li><li><a href="/episodes/">All episodes</a></li><!--/BUILD:footer-episodes--></ul>
       </div>
       <div>
         <h4>Explore</h4>
@@ -186,6 +200,7 @@
 
 <script src="/assets/links.js"></script>
 <script src="/assets/episodes.js"></script>
+<script src="/assets/cards.js"></script>
 <script src="/assets/site.js"></script>
 </body>
 </html>
