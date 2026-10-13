@@ -64,7 +64,10 @@ at the top and click **Request indexing**.
 - `VideoObject` duration and upload date **must match YouTube exactly**. Check the
   duration shown in YouTube Studio. Wrong values can cause Google to drop the
   video result
-- Chapters in `hasPart`, with the last `endOffset` equal to the real runtime
+- Do **not** add `hasPart` Clip entries to the VideoObject. Their `?t=` URLs pointed at
+  this site, which cannot seek the YouTube embed, and Google indexed `?t=0` instead of the
+  real page (October 2026). Put chapters in the YouTube description instead, with verified
+  timestamps, and mirror them in the page's visible chapter list (links go to YouTube)
 - The embedded video, key takeaways, guest bio, clips, related episodes
 - Leave the clips container as `<div data-episode-clips="N"><!--BUILD:clips--><!--/BUILD:clips--></div>`
   and the More episodes grid as `<!--BUILD:related--><!--/BUILD:related-->`. The build fills both
