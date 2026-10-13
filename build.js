@@ -128,6 +128,18 @@ function neighbours(ep, list) {
   return pick.sort((a, b) => b.number - a.number);
 }
 
+/* "Where to go next": GP first, then official resources stored per episode in episodes.js */
+function nextSteps(ep) {
+  if (!ep.next || !ep.next.length) return "";
+  return '<div class="next-steps reveal"><span class="eyebrow">Where to go next</span>' +
+    "<h2>Trusted places to start</h2>" +
+    '<p class="ns-gp"><strong>Start with your GP.</strong> They can tell you what applies to you.</p>' +
+    '<ul class="ns-list">' + ep.next.map((r) =>
+      '<li><a data-out href="' + r.url + '">' + r.label + "</a>" +
+      '<span class="ns-by">' + r.by + "</span>" +
+      '<span class="ns-note">' + r.note + "</span></li>").join("") + "</ul></div>";
+}
+
 function guestList() {
   const eps = C.published().concat(C.coming());
   return '<ul class="guest-list">' + eps.map((e) =>
@@ -200,6 +212,7 @@ for (const f of allPages()) {
       ? '<div class="clip-grid">' + own.map(C.episodeClipCard).join("") + "</div>"
       : C.clipsPending(ep.number)]);
     blocks.push(["related", neighbours(ep, published).map(relatedCard).join("")]);
+    blocks.push(["next-steps", nextSteps(ep)]);
   }
 
   if (f === "index.html" && published[0]) {        /* point the now-playing chip at the newest episode */

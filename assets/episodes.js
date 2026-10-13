@@ -34,6 +34,10 @@ window.OTM_DATA = [
   },
   {
     id: "ep5",
+    next: [
+      { label: "Questions to ask your doctor", by: "healthdirect", url: "https://www.healthdirect.gov.au/questions-to-ask-your-doctor", note: "Tips for preparing and writing down your questions before you go." },
+      { label: "Health care and Medicare", by: "Services Australia", url: "https://www.servicesaustralia.gov.au/health-care-and-medicare", note: "What Medicare covers, including GP visits." }
+    ],
     type: "episode",
     number: 5,
     page: "/episodes/making-the-most-of-your-gp-appointment/",
@@ -53,6 +57,11 @@ window.OTM_DATA = [
   },
   {
     id: "ep2",
+    next: [
+      { label: "Who should do the bowel screening test", by: "National Bowel Cancer Screening Program, Australian Government", url: "https://www.health.gov.au/our-work/national-bowel-cancer-screening-program/doing-a-bowel-screening-test/who-should-do-the-bowel-screening-test", note: "A free test every two years for eligible people aged 45 to 74." },
+      { label: "Healthy Male", by: "Funded by the Australian Government", url: "https://healthymale.org.au/", note: "Information on men's physical and mental health." },
+      { label: "Lifeline 13 11 14", by: "Lifeline Australia", url: "https://www.lifeline.org.au/", note: "24-hour crisis support. If life is in danger, call 000." }
+    ],
     type: "episode",
     number: 2,
     page: "/episodes/mens-health/",
@@ -71,6 +80,11 @@ window.OTM_DATA = [
   },
   {
     id: "ep1",
+    next: [
+      { label: "Should I be checked for skin cancer?", by: "healthdirect", url: "https://www.healthdirect.gov.au/should-I-be-checked-for-skin-cancer", note: "Who is at higher risk, and how often to have your skin checked." },
+      { label: "Checking for skin cancer", by: "SunSmart, Cancer Council Victoria", url: "https://www.sunsmart.com.au/skin-cancer/checking-for-skin-cancer", note: "Guidance on checking your own skin." },
+      { label: "SunSmart Global UV app", by: "SunSmart, Cancer Council Victoria", url: "https://www.sunsmart.com.au/resources/sunsmart-app", note: "A free app showing the UV level where you are." }
+    ],
     type: "episode",
     number: 1,
     page: "/episodes/skin-checks-early-detection/",
@@ -89,6 +103,10 @@ window.OTM_DATA = [
   },
   {
     id: "ep3",
+    next: [
+      { label: "Free 15-minute adult hearing checks", by: "Hearing Australia", url: "https://www.hearing.com.au/free-15-minute-adult-hearing-checks", note: "Free for adults aged 18 and over, with no referral needed. Find a check near you." },
+      { label: "Hearing tests", by: "healthdirect", url: "https://www.healthdirect.gov.au/hearing-test", note: "What a hearing test involves, and help with the cost." }
+    ],
     type: "episode",
     number: 3,
     title: "Hearing Health with Hearing Australia",
@@ -107,6 +125,10 @@ window.OTM_DATA = [
   },
   {
     id: "ep4",
+    next: [
+      { label: "My Health Record", by: "Australian Digital Health Agency", url: "https://www.digitalhealth.gov.au/initiatives-and-programs/my-health-record", note: "Your record can include test and scan reports uploaded by your healthcare providers." },
+      { label: "Questions to ask your doctor", by: "healthdirect", url: "https://www.healthdirect.gov.au/questions-to-ask-your-doctor", note: "Tips for preparing questions, such as how you will get your results." }
+    ],
     type: "episode",
     number: 4,
     page: "/episodes/medical-receptionist/",

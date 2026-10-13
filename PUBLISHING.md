@@ -22,6 +22,7 @@ In `assets/episodes.js`, add the episode object (copy an existing one). Fields:
 | `short` | the short label used in the footer, e.g. "GP Appointments" |
 | `topic` | finishes the sentence "<guest> on ..." in the FAQ guest answer |
 | `published` | the YouTube release date. Feeds `datePublished` in the episode schema |
+| `next` | the "Where to go next" links on the episode page: `{ label, by, url, note }`. Government or official non-profit sources only, never a clinic, practice, brand or product. Check every link is live before adding it |
 
 For each clip, add `release` if the Short is scheduled, written as
 `"2026-10-16T19:00:00+11:00"`. The clip stays hidden everywhere on the site until
@@ -72,6 +73,7 @@ at the top and click **Request indexing**.
 - Leave the clips container as `<div data-episode-clips="N"><!--BUILD:clips--><!--/BUILD:clips--></div>`
   and the More episodes grid as `<!--BUILD:related--><!--/BUILD:related-->`. The build fills both
 - Leave the navigation as `<nav class="nav"><!--BUILD:nav--><!--/BUILD:nav--></nav>`
+- Leave `<!--BUILD:next-steps--><!--/BUILD:next-steps-->` at the end of the guest section. The build fills it from `next`
 - The collapsed transcript at the bottom
 - The disclaimer. Mental health topics also carry Lifeline 13 11 14
 
