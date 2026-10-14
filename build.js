@@ -80,7 +80,7 @@ function allPages() {
     for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
       const full = path.join(dir, e.name);
       if (e.isDirectory()) {
-        if (!["design-options", ".git", "assets", "node_modules"].includes(e.name)) walk(full);
+        if (!["design-options", ".git", "assets", "node_modules", "print"].includes(e.name)) walk(full);
       } else if (e.name.endsWith(".html") && !e.name.startsWith("google")) {
         out.push(path.relative(ROOT, full).split(path.sep).join("/"));
       }

@@ -11,6 +11,11 @@ window.OTM_LINKS = {
   facebook:  "https://www.facebook.com/share/19Jubh4NqQ/",
   tiktok:    "https://www.tiktok.com/@onthemendgp",
 
+  // Channel trailer (landscape for embeds, vertical Short for the home page player)
+  trailer:      "https://www.youtube.com/watch?v=2usPs0vAvoY",
+  trailerId:    "2usPs0vAvoY",
+  trailerShort: "https://youtube.com/shorts/Cm5d03OLDL8",
+
   // Contact
   email: "onthemendgp@gmail.com",
 
