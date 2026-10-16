@@ -152,7 +152,8 @@
           ? hits.length + (hits.length === 1 ? " episode or clip" : " episodes and clips") + ": " + what
           : "Nothing on " + what + " yet. Tell us it should be next, further down the page.";
         epGrid.innerHTML = C.finder(hits.slice(0, FINDER_MAX));
-        allLink.href = "/episodes/" + (finder.topic ? "?q=" + encodeURIComponent(finder.topic) : "");
+        var qs = [finder.topic ? "q=" + encodeURIComponent(finder.topic) : "", finder.stream ? "stream=" + finder.stream : ""].filter(Boolean).join("&");
+        allLink.href = "/episodes/" + (qs ? "?" + qs : "");
         allLink.textContent = hits.length > FINDER_MAX ? "See all " + hits.length + " on the episodes page" : "Browse and search all episodes";
       }
       wireOutLinks(epGrid);
@@ -320,24 +321,36 @@
       });
     }
 
+    var hubStream = "";
+    var hubStreamBtns = document.querySelectorAll(".stream-btn");
+
     function render() {
       var q = normalise(searchInput.value.trim());
-      var hits = DATA.filter(function (d) { return partnerVisible(d) && C.matches(d, q); });
+      hubStreamBtns.forEach(function (b) {
+        var on = b.getAttribute("data-stream") === hubStream;
+        b.classList.toggle("active", on);
+        b.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+      var hits = DATA.filter(function (d) {
+        return partnerVisible(d) && C.matches(d, q) && (!hubStream || C.streamOf(d) === hubStream);
+      });
       hits = partnerSort(chronoSort(hits));
       chips.forEach(function (c) { c.classList.toggle("active", normalise(c.getAttribute("data-q")) === q); });
       if (!hits.length) {
         countEl.textContent = "";
-        resultsEl.innerHTML = '<div class="no-results"><h3>No results for "' + escapeHtml(searchInput.value) + '"</h3>' +
+        var what = [searchInput.value.trim(), hubStream ? C.STREAM_LABEL[hubStream] : ""].filter(Boolean).join(" in ");
+        resultsEl.innerHTML = '<div class="no-results"><h3>No results for "' + escapeHtml(what) + '"</h3>' +
           '<p>Try a different keyword, like skin checks, men\'s health or hearing. New topics are added with every episode.</p></div>';
         return;
       }
       var eps = hits.filter(function (h) { return h.type === "episode"; });
       var soon = hits.filter(function (h) { return h.type === "coming"; });
       var clips = hits.filter(function (h) { return h.type === "clip"; });
-      countEl.textContent = q
+      countEl.textContent = (q
         ? hits.length + " result" + (hits.length === 1 ? "" : "s") + " for \"" + searchInput.value.trim() + "\""
-        : "Showing all " + eps.length + " episodes, " + clips.length + " clips" +
-          (soon.length ? " and " + soon.length + " coming soon" : "");
+        : "Showing " + (hubStream ? "" : "all ") + eps.length + " episodes, " + clips.length + " clips" +
+          (soon.length ? " and " + soon.length + " coming soon" : "")) +
+        (hubStream ? " in " + C.STREAM_LABEL[hubStream] : "");
 
       resultsEl.innerHTML = C.hub(hits);
       wireOutLinks(resultsEl);
@@ -351,8 +364,12 @@
         render();
       });
     });
+    hubStreamBtns.forEach(function (b) {
+      b.addEventListener("click", function () { hubStream = b.getAttribute("data-stream"); render(); });
+    });
     var params = new URLSearchParams(location.search);
     if (params.get("q")) searchInput.value = params.get("q");
+    if (C.STREAM_LABEL[params.get("stream")]) hubStream = params.get("stream");
     render();
   }
 

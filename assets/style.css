@@ -207,7 +207,11 @@ h3 { font-size: 1.25rem; }
   border: 1.5px solid rgba(33, 71, 103, .35);
   display: inline-flex; align-items: center; gap: 5px;
 }
-.tag-loc::before { content: "📍"; font-size: .72rem; }
+.tag-loc::before {
+  content: ""; width: 12px; height: 12px; background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3C/svg%3E") center / contain no-repeat;
+}
 .card-actions { display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap; }
 .card-actions .btn { padding: 10px 18px; font-size: .88rem; }
 
@@ -804,6 +808,33 @@ h2 .accent { font-style: italic; color: var(--coral); }
 /* ---------- Episode pages: the chapter that is playing ---------- */
 .chapters a.playing { background: var(--navy); color: var(--offwhite); }
 .chapters a.playing .ch-t { color: var(--coral); }
+
+/* =========================================================
+   2026 REDESIGN: inner page headers and line icons
+   ========================================================= */
+.page-hero { position: relative; overflow: hidden; padding: 84px 0 76px; }
+.page-hero::before {
+  content: ""; position: absolute; right: -160px; top: -220px; width: 620px; height: 620px; border-radius: 50%;
+  border: 2px solid rgba(137, 186, 179, .16); box-shadow: 0 0 0 80px rgba(137, 186, 179, .04), 0 0 0 160px rgba(137, 186, 179, .03);
+  pointer-events: none;
+}
+.page-hero::after {
+  content: ""; position: absolute; right: 18%; bottom: -60px; width: 180px; height: 180px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(254, 123, 110, .22), transparent 70%); pointer-events: none;
+}
+.page-hero .wrap { position: relative; z-index: 1; }
+.page-hero .eyebrow { display: inline-flex; align-items: center; gap: 10px; color: var(--coral); }
+.page-hero .eyebrow::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--coral); }
+.page-hero h1 { max-width: 20ch; text-wrap: balance; }
+.page-hero h1 .accent { font-style: italic; color: var(--teal); }
+
+/* Episodes page: search beside the stream filter */
+.finder-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px; }
+.finder-bar .search-bar { flex: 1 1 360px; }
+
+/* Line icons in the icon boxes (About, For clinics, Contact) */
+.contact-icon { color: var(--navy); }
+.contact-icon svg { width: 28px; height: 28px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
 /* =========================================================
    2026 REDESIGN: episode pages

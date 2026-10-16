@@ -48,16 +48,23 @@
 <section class="page-hero">
   <div class="wrap">
     <span class="eyebrow">Episodes and clips</span>
-    <h1>Find a topic that matters to you</h1>
+    <h1>Find a topic that <span class="accent">matters to you</span></h1>
     <p class="lede">Search every episode and clip by keyword. Everything plays on YouTube, or listen to full episodes on Spotify.</p>
   </div>
 </section>
 
 <section class="section">
   <div class="wrap">
-    <div class="search-bar">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-      <input id="search-input" type="search" placeholder="Try skin checks, Medicare, mental health..." aria-label="Search episodes and clips">
+    <div class="finder-bar">
+      <div class="search-bar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="search-input" type="search" placeholder="Try skin checks, Medicare, mental health..." aria-label="Search episodes and clips">
+      </div>
+      <div class="stream-toggle" role="group" aria-label="Show episodes from">
+        <button type="button" class="stream-btn active" data-stream="" aria-pressed="true"><span class="dot dot-all"></span>Everything</button>
+        <button type="button" class="stream-btn" data-stream="health" aria-pressed="false"><span class="dot dot-health"></span>Health, explained</button>
+        <button type="button" class="stream-btn" data-stream="behind" aria-pressed="false"><span class="dot dot-behind"></span>Behind the scenes</button>
+      </div>
     </div>
     <div class="chip-row">
       <button class="chip" data-q="skin checks">Skin checks</button>
@@ -65,7 +72,7 @@
       <button class="chip" data-q="mental health">Mental health</button>
       <button class="chip" data-q="hearing">Hearing</button>
       <button class="chip" data-q="prevention">Prevention</button>
-      <button class="chip" data-q="behind the scenes">Behind the scenes</button><button class="chip" data-q="medicare">Medicare</button><button class="chip" data-q="appointments">Appointments</button>
+      <button class="chip" data-q="medicare">Medicare</button><button class="chip" data-q="appointments">Appointments</button>
       <button class="chip" data-q="balwyn">Balwyn</button><button class="chip" data-q="chelsea">Chelsea</button>
       <button class="chip" data-q="victoria">Victoria</button>
     </div>
