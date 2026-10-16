@@ -236,6 +236,57 @@
     });
   }
 
+  /* ----- Episode pages: Key takeaways / Show notes / Transcript tabs -----
+     Without JavaScript every panel simply shows in turn, so nothing is ever hidden from readers or Google */
+  var tabList = document.querySelector(".ep-tabs");
+  if (tabList) {
+    var tabs = tabList.querySelectorAll("[role=tab]");
+    var showTab = function (tab, focus) {
+      tabs.forEach(function (t) {
+        var on = t === tab;
+        t.setAttribute("aria-selected", on ? "true" : "false");
+        t.tabIndex = on ? 0 : -1;
+        document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
+      });
+      if (focus) tab.focus();
+    };
+    tabList.hidden = false;
+    tabList.parentNode.classList.add("tabs-ready");
+    tabs.forEach(function (t, i) {
+      t.addEventListener("click", function () { showTab(t); });
+      t.addEventListener("keydown", function (e) {
+        var step = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+        if (step) { e.preventDefault(); showTab(tabs[(i + step + tabs.length) % tabs.length], true); }
+      });
+    });
+    var start = location.hash === "#transcript" ? document.getElementById("tab-transcript") : tabs[0];
+    showTab(start || tabs[0]);
+  }
+
+  /* ----- Episode pages: the first released clip in the side panel ----- */
+  document.querySelectorAll("[data-first-clip]").forEach(function (box) {
+    var first = C.clips(parseInt(box.getAttribute("data-first-clip"), 10))[0];
+    if (!first) return;                    /* clips not out yet: the card points to the clips section */
+    box.querySelector(".side-title").innerHTML =
+      '<a class="side-clip-media" href="' + C.clipLink(first.id) + '"><img src="' + C.thumb(first) + '" alt=""><span>' + first.title + "</span></a>";
+    var btn = box.querySelector(".btn");
+    btn.href = C.clipLink(first.id);
+    btn.textContent = "Watch the clip";
+  });
+
+  /* ----- Episode pages: copy a link to this page ----- */
+  document.querySelectorAll("[data-copy-link]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var url = location.origin + location.pathname;
+      var done = function () { b.textContent = "Link copied"; setTimeout(function () { b.textContent = "Copy link"; }, 2500); };
+      if (navigator.share && matchMedia("(pointer: coarse)").matches) {
+        navigator.share({ title: document.title, url: url }).catch(function () {});
+      } else if (navigator.clipboard) {
+        navigator.clipboard.writeText(url).then(done, function () { prompt("Copy this link", url); });
+      }
+    });
+  });
+
   /* ----- Episode page clip grid: newly released clips appear without a rebuild ----- */
   document.querySelectorAll("[data-episode-clips]").forEach(function (el) {
     var n = parseInt(el.getAttribute("data-episode-clips"), 10);

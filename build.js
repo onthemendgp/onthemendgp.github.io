@@ -21,7 +21,8 @@
      index.html          now-playing chip, hero play button and counts, latest
                          episodes, coming next, clip row
      episodes/index.html the full grouped list of episodes and clips + schema
-     each episode page   its released clips and links to neighbouring episodes
+     each episode page   its released clips, links to neighbouring episodes
+                         (More episodes and the side panel's Up next)
      about/index.html    the guest list
      sitemap.xml         every page, dated by its last real change
 
@@ -129,6 +130,14 @@ function neighbours(ep, list) {
   return pick.sort((a, b) => b.number - a.number);
 }
 
+/* "Up next" in an episode page's side panel: the same neighbouring episodes as "More episodes" */
+function upNext(list) {
+  return '<ul class="upnext-list">' + list.map((e) =>
+    '<li class="stream-' + C.streamOf(e) + '"><a href="' + e.page + '"><img loading="lazy" src="' + C.thumb(e) + '" alt="">' +
+    '<span class="upnext-text"><small>Episode ' + e.number + " &middot; " + C.STREAM_LABEL[C.streamOf(e)] + "</small><b>" +
+    e.title + "</b></span></a></li>").join("") + "</ul>";
+}
+
 /* "Where to go next": GP first, then official resources stored per episode in episodes.js */
 function nextSteps(ep) {
   if (!ep.next || !ep.next.length) return "";
@@ -214,6 +223,7 @@ for (const f of allPages()) {
       ? '<div class="clip-grid">' + own.map(C.episodeClipCard).join("") + "</div>"
       : C.clipsPending(ep.number)]);
     blocks.push(["related", neighbours(ep, published).map(relatedCard).join("")]);
+    blocks.push(["upnext", upNext(neighbours(ep, published))]);
     blocks.push(["next-steps", nextSteps(ep)]);
   }
 
