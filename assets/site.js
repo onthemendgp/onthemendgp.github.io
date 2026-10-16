@@ -30,15 +30,6 @@
     });
   }
 
-  var STATE_NAMES = { VIC: "Victoria", NSW: "New South Wales", QLD: "Queensland",
-    SA: "South Australia", WA: "Western Australia", TAS: "Tasmania",
-    NT: "Northern Territory", ACT: "Australian Capital Territory" };
-
-  /* Suburb, state code and full state name are all searchable */
-  function locationTerms(item) {
-    return [item.suburb || "", item.state || "", STATE_NAMES[item.state] || ""].join(" ");
-  }
-
   /* ----- Populate any element with data-link="youtube|spotify|instagram|facebook|tiktok|email" ----- */
   document.querySelectorAll("[data-link]").forEach(function (a) {
     var key = a.getAttribute("data-link");
@@ -77,6 +68,171 @@
   if (nextEl) nextEl.innerHTML = C.nextBand(C.coming()[0]);
   var clipRow = document.getElementById("home-clips");
   if (clipRow) clipRow.innerHTML = C.clips().map(C.clipCard).join("");
+  var statsEl = document.getElementById("hero-stats");
+  if (statsEl) statsEl.innerHTML = C.heroStats();      /* clip count moves as scheduled clips release */
+
+  /* ----- Docked episode player: plays a full episode without leaving the page ----- */
+  var dock = null;
+  function playEpisode(ep) {
+    var id = ((L.episodes || {})[ep.id] || {}).youtubeId;
+    if (!id) return false;
+    if (!dock) {
+      dock = document.createElement("div");
+      dock.className = "player-dock";
+      dock.setAttribute("role", "region");
+      dock.setAttribute("aria-label", "Episode player");
+      dock.innerHTML =
+        '<div class="pd-frame"></div>' +
+        '<div class="pd-bar">' +
+        '<span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>' +
+        '<span class="pd-text"><b>Now playing</b><a class="pd-title"></a></span>' +
+        '<button type="button" class="pd-close" aria-label="Close player">&times;</button>' +
+        "</div>";
+      document.body.appendChild(dock);
+      dock.querySelector(".pd-close").addEventListener("click", function () {
+        dock.classList.remove("open");
+        dock.querySelector(".pd-frame").innerHTML = "";   /* stops playback */
+      });
+    }
+    var title = dock.querySelector(".pd-title");
+    title.textContent = "Ep " + ep.number + ": " + ep.title;
+    title.href = ep.page || epLink(ep.id, "youtube");
+    dock.querySelector(".pd-frame").innerHTML =
+      '<iframe src="https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1" title="' +
+      ep.title.replace(/"/g, "&quot;") + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+    dock.classList.add("open");
+    return true;
+  }
+  var heroPlay = document.getElementById("hero-play");
+  if (heroPlay) {
+    heroPlay.addEventListener("click", function (e) {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+      var latest = C.published()[0];
+      if (latest && playEpisode(latest)) e.preventDefault();
+    });
+  }
+
+  /* ----- "What brings you in today?" topic and stream finder ----- */
+  var finderCount = document.getElementById("finder-count");
+  if (epGrid && finderCount) {
+    var FINDER_MAX = 9;
+    var finder = { stream: "", topic: "", label: "" };
+    var streamBtns = document.querySelectorAll(".stream-btn");
+    var topicBtns = document.querySelectorAll("[data-topic]");
+    var clearBtn = document.querySelector("[data-topic-clear]");
+    var allLink = document.getElementById("finder-all");
+
+    var renderFinder = function () {
+      streamBtns.forEach(function (b) {
+        var on = b.getAttribute("data-stream") === finder.stream;
+        b.classList.toggle("active", on);
+        b.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+      topicBtns.forEach(function (b) {
+        var on = b.getAttribute("data-topic") === finder.topic;
+        b.classList.toggle("active", on);
+        b.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+      if (clearBtn) clearBtn.hidden = !finder.stream && !finder.topic;
+
+      if (!finder.stream && !finder.topic) {
+        epGrid.innerHTML = C.published().slice(0, C.HOME_EPISODES).map(C.episodeCard).join("");
+        finderCount.textContent = "The latest episodes";
+        allLink.href = "/episodes/";
+        allLink.textContent = "Browse and search all episodes";
+      } else {
+        var hits = chronoSort(DATA.filter(function (d) {
+          return d.type !== "coming" && partnerVisible(d) &&
+            (!finder.stream || C.streamOf(d) === finder.stream) && C.matches(d, finder.topic);
+        }));
+        var what = [finder.label, finder.stream ? C.STREAM_LABEL[finder.stream] : ""].filter(Boolean).join(" · ");
+        finderCount.textContent = hits.length
+          ? hits.length + (hits.length === 1 ? " episode or clip" : " episodes and clips") + ": " + what
+          : "Nothing on " + what + " yet. Tell us it should be next, further down the page.";
+        epGrid.innerHTML = C.finder(hits.slice(0, FINDER_MAX));
+        allLink.href = "/episodes/" + (finder.topic ? "?q=" + encodeURIComponent(finder.topic) : "");
+        allLink.textContent = hits.length > FINDER_MAX ? "See all " + hits.length + " on the episodes page" : "Browse and search all episodes";
+      }
+      wireOutLinks(epGrid);
+      epGrid.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("visible"); });
+    };
+
+    streamBtns.forEach(function (b) {
+      b.addEventListener("click", function () { finder.stream = b.getAttribute("data-stream"); renderFinder(); });
+    });
+    topicBtns.forEach(function (b) {
+      b.addEventListener("click", function () {
+        var t = b.getAttribute("data-topic");
+        finder.topic = finder.topic === t ? "" : t;
+        finder.label = finder.topic ? b.textContent.trim() : "";
+        renderFinder();
+      });
+    });
+    if (clearBtn) clearBtn.addEventListener("click", function () {
+      finder.stream = ""; finder.topic = ""; finder.label = ""; renderFinder();
+    });
+    document.querySelectorAll("[data-pick-stream]").forEach(function (a) {
+      a.addEventListener("click", function () {
+        finder.stream = a.getAttribute("data-pick-stream"); finder.topic = ""; finder.label = ""; renderFinder();
+      });
+    });
+  }
+
+  /* ----- Myth or fact ----- */
+  var quizCards = document.querySelectorAll(".quiz-card");
+  if (quizCards.length) {
+    var scoreEl = document.getElementById("quiz-score");
+    var right = 0, answered = 0;
+    quizCards.forEach(function (card) {
+      card.querySelectorAll("[data-guess]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          if (card.classList.contains("answered")) return;
+          var correct = btn.getAttribute("data-guess") === card.getAttribute("data-answer");
+          answered++; if (correct) right++;
+          card.classList.add("answered", correct ? "is-right" : "is-wrong");
+          card.querySelector(".quiz-result").textContent = correct ? "You got it." : "Not quite.";
+          if (scoreEl) scoreEl.textContent = "Your score: " + right + " of " + answered + ".";
+          var answer = card.querySelector(".quiz-answer");
+          answer.setAttribute("tabindex", "-1");
+          answer.focus();
+        });
+      });
+    });
+  }
+
+  /* ----- "What should we ask a GP next?" : opens the visitor's email app ----- */
+  var askForm = document.getElementById("ask-form");
+  if (askForm) {
+    var askBox = document.getElementById("ask-q");
+    document.querySelectorAll("[data-ask]").forEach(function (b) {
+      b.addEventListener("click", function () { askBox.value = b.getAttribute("data-ask"); askBox.focus(); });
+    });
+    askForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var q = askBox.value.trim();
+      if (!q) { askBox.focus(); return; }
+      location.href = "mailto:" + (L.email || "") + "?subject=" + encodeURIComponent("A question for On The Mend") +
+        "&body=" + encodeURIComponent(q);
+      document.getElementById("ask-sent").hidden = false;
+    });
+  }
+
+  /* ----- Episode pages: chapters jump the embedded video instead of leaving the site ----- */
+  var chapterLinks = document.querySelectorAll(".chapters a");
+  var epFrame = document.querySelector('iframe[src*="youtube"]');
+  if (chapterLinks.length && epFrame) {
+    chapterLinks.forEach(function (a) {
+      a.addEventListener("click", function (e) {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+        var m = /[?&]v=([A-Za-z0-9_-]{6,}).*?[?&]t=(\d+)s/.exec(a.href);
+        if (!m) return;
+        e.preventDefault();
+        epFrame.src = "https://www.youtube-nocookie.com/embed/" + m[1] + "?start=" + m[2] + "&autoplay=1&rel=0";
+        chapterLinks.forEach(function (o) { o.classList.toggle("playing", o === a); });
+        epFrame.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+    });
+  }
 
   /* ----- Episode page clip grid: newly released clips appear without a rebuild ----- */
   document.querySelectorAll("[data-episode-clips]").forEach(function (el) {
@@ -111,15 +267,9 @@
       });
     }
 
-    function matches(item, q) {
-      if (!q) return true;
-      var hay = normalise(item.title + " " + (item.guest || "") + " " + item.description + " " + item.tags.join(" ") + " " + locationTerms(item) + " " + (item.keywords || ""));
-      return q.split(/\s+/).every(function (word) { return hay.indexOf(word) !== -1; });
-    }
-
     function render() {
       var q = normalise(searchInput.value.trim());
-      var hits = DATA.filter(function (d) { return partnerVisible(d) && matches(d, q); });
+      var hits = DATA.filter(function (d) { return partnerVisible(d) && C.matches(d, q); });
       hits = partnerSort(chronoSort(hits));
       chips.forEach(function (c) { c.classList.toggle("active", normalise(c.getAttribute("data-q")) === q); });
       if (!hits.length) {

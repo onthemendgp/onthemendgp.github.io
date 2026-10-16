@@ -17,7 +17,7 @@ In `assets/episodes.js`, add the episode object (copy an existing one). Fields:
 | `page` | `/episodes/<slug>/` for published episodes |
 | `title`, `guest`, `guestCredit` | shown on cards. Guest credit must be a plain statement of fact |
 | `clinic`, `suburb`, `state` | `suburb` may be empty when not tied to one place. `state` drives the location tag |
-| `image` | `/assets/img/epN.jpg` |
+| `image` | `/assets/img/epN.jpg`. Optional: leave it as `""` and the card uses the video's YouTube thumbnail from `links.js` |
 | `description`, `tags`, `keywords` | `keywords` are searchable but never displayed |
 | `short` | the short label used in the footer, e.g. "GP Appointments" |
 | `topic` | finishes the sentence "<guest> on ..." in the FAQ guest answer |

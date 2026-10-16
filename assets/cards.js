@@ -27,6 +27,17 @@ window.OTM_CARDS = function (L, DATA, partner, now) {
     return url(ep[kind]) || platform(kind === "spotify" ? "spotify" : "youtube");
   }
   function clipLink(id) { return url((L.clips || {})[id]) || platform("youtube"); }
+
+  /* Card image: the "image" in episodes.js when set, otherwise the video's own
+     YouTube thumbnail, so a new episode or clip shows its thumbnail as soon as
+     its YouTube link is in links.js */
+  function thumb(item) {
+    if (item.image) return item.image;
+    var id = item.type === "clip"
+      ? ((/(?:shorts\/|youtu\.be\/|[?&]v=)([A-Za-z0-9_-]{6,})/.exec(url((L.clips || {})[item.id])) || [])[1])
+      : ((L.episodes || {})[item.id] || {}).youtubeId;
+    return id ? "https://i.ytimg.com/vi/" + id + "/hqdefault.jpg" : "/assets/img/hero.jpg";
+  }
   function episodePage(num) {
     for (var i = 0; i < DATA.length; i++) {
       if (DATA[i].type === "episode" && DATA[i].number === num && DATA[i].page) return DATA[i].page;
@@ -57,6 +68,40 @@ window.OTM_CARDS = function (L, DATA, partner, now) {
     return chronoSort(LIVE.filter(function (d) {
       return d.type === "clip" && (episodeNumber == null || d.episode === episodeNumber);
     }));
+  }
+
+  /* ---------- streams ---------- */
+  /* Episodes carry "stream"; a clip follows its episode. Default is Health, explained */
+  function streamOf(item) {
+    if (item.stream) return item.stream;
+    if (item.type === "clip") {
+      for (var i = 0; i < DATA.length; i++) {
+        if (DATA[i].type !== "clip" && DATA[i].number === item.episode) return DATA[i].stream || "health";
+      }
+    }
+    return "health";
+  }
+  var STREAM_LABEL = { health: "Health, explained", behind: "Behind the scenes" };
+
+  /* ---------- search ---------- */
+  var STATE_NAMES = { VIC: "Victoria", NSW: "New South Wales", QLD: "Queensland",
+    SA: "South Australia", WA: "Western Australia", TAS: "Tasmania",
+    NT: "Northern Territory", ACT: "Australian Capital Territory" };
+
+  /* Suburb, state code and full state name are all searchable */
+  function locationTerms(item) {
+    return [item.suburb || "", item.state || "", STATE_NAMES[item.state] || ""].join(" ");
+  }
+  /* Every word of the query must start a word somewhere in the item,
+     so "skin" finds "skin checks" but not "asking" */
+  function matches(item, q) {
+    if (!q) return true;
+    var hay = " " + (item.title + " " + (item.guest || "") + " " + item.description + " " + item.tags.join(" ") +
+      " " + locationTerms(item) + " " + (item.keywords || "")).toLowerCase();
+    return q.toLowerCase().split(/\s+/).every(function (word) {
+      var esc = word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      return new RegExp("[^a-z0-9]" + esc).test(hay);
+    });
   }
 
   /* ---------- partner clinic view (?p=code) ---------- */
@@ -97,10 +142,12 @@ window.OTM_CARDS = function (L, DATA, partner, now) {
         '<div class="card-actions"><a class="btn btn-ghost" data-out href="' + platform("youtube") + '">Subscribe for the release</a></div>' +
         "</div></article>";
     }
-    return '<article class="card reveal">' +
+    var stream = streamOf(item);
+    return '<article class="card stream-' + stream + ' reveal">' +
       '<a class="card-media"' + (item.page ? ' href="' + item.page + '"' : ' data-out href="' + yt + '"') +
-      '><img loading="lazy" src="' + item.image + '" alt="On The Mend, an Australian GP podcast: episode ' +
-      item.number + ", " + item.title + '">' + PLAY + "</a>" +
+      '><img loading="lazy" src="' + thumb(item) + '" alt="On The Mend, an Australian GP podcast: episode ' +
+      item.number + ", " + item.title + '">' + PLAY +
+      '<span class="stream-flag">' + STREAM_LABEL[stream] + "</span></a>" +
       '<div class="card-body">' +
       '<span class="card-meta">Episode ' + item.number + " · Full episode</span>" +
       "<h3>" + (item.page ? '<a href="' + item.page + '">' + item.title + "</a>" : item.title) + "</h3>" +
@@ -116,8 +163,8 @@ window.OTM_CARDS = function (L, DATA, partner, now) {
 
   /* Compact card for the home page clip row */
   function clipCard(item) {
-    return '<article class="card clip-card reveal">' +
-      '<a class="card-media" data-out href="' + clipLink(item.id) + '"><img loading="lazy" src="' + item.image +
+    return '<article class="card clip-card stream-' + streamOf(item) + ' reveal">' +
+      '<a class="card-media" data-out href="' + clipLink(item.id) + '"><img loading="lazy" src="' + thumb(item) +
       '" alt="' + item.title + '">' + PLAY + "</a>" +
       '<div class="card-body">' +
       '<span class="card-meta">Clip · Ep ' + item.episode + "</span>" +
@@ -128,7 +175,7 @@ window.OTM_CARDS = function (L, DATA, partner, now) {
   /* Compact card for the clip grid on an episode page */
   function episodeClipCard(item) {
     return '<article class="card clip-card reveal">' +
-      '<a class="card-media" data-out href="' + clipLink(item.id) + '"><img loading="lazy" src="' + item.image +
+      '<a class="card-media" data-out href="' + clipLink(item.id) + '"><img loading="lazy" src="' + thumb(item) +
       '" alt="' + item.title + '">' + PLAY + "</a>" +
       '<div class="card-body"><span class="card-meta">Clip</span><h3>' + item.title + "</h3></div></article>";
   }
@@ -137,9 +184,9 @@ window.OTM_CARDS = function (L, DATA, partner, now) {
   function clipCardFull(item) {
     var link = clipLink(item.id);
     var page = episodePage(item.episode);
-    return '<article class="card reveal">' +
+    return '<article class="card stream-' + streamOf(item) + ' reveal">' +
       '<a class="card-media" data-out href="' + link + '" style="aspect-ratio:16/10"><img loading="lazy" src="' +
-      item.image + '" alt="' + item.title + '" style="object-position:top">' + PLAY + "</a>" +
+      thumb(item) + '" alt="' + item.title + '" style="object-position:top">' + PLAY + "</a>" +
       '<div class="card-body">' +
       '<span class="card-meta">Short clip &middot; ' +
       (page ? '<a href="' + page + '">From episode ' + item.episode + "</a>" : "From episode " + item.episode) +
@@ -202,12 +249,30 @@ window.OTM_CARDS = function (L, DATA, partner, now) {
       group("Short clips", "One or two minute highlights pulled from the episodes above.", cl);
   }
 
+  /* Hero counts: full episodes, released clips and guests so far */
+  function heroStats() {
+    var eps = published();
+    var guests = {};
+    eps.forEach(function (e) { if (e.guest) guests[e.guest] = 1; });
+    function stat(n, label) { return '<div class="stat"><b>' + n + "</b><span>" + label + "</span></div>"; }
+    return stat(eps.length, "Full episodes") + stat(clips().length, "Short clips") +
+      stat(Object.keys(guests).length, "Guests so far");
+  }
+
+  /* Home page "What brings you in today?" results: episodes first, then clips */
+  function finder(list) {
+    var eps = list.filter(function (h) { return h.type === "episode"; });
+    var cl = list.filter(function (h) { return h.type === "clip"; });
+    return eps.map(episodeCard).join("") + cl.map(clipCardFull).join("");
+  }
+
   return {
     LIVE: LIVE, isLive: isLive, url: url, platform: platform, epLink: epLink, clipLink: clipLink,
     episodePage: episodePage, chronoSort: chronoSort, published: published, coming: coming,
     clips: clips, isFeatured: isFeatured, locationLabel: locationLabel, tagRow: tagRow,
+    streamOf: streamOf, STREAM_LABEL: STREAM_LABEL, locationTerms: locationTerms, matches: matches,
     episodeCard: episodeCard, clipCard: clipCard, episodeClipCard: episodeClipCard,
-    clipCardFull: clipCardFull, nextBand: nextBand, clipsPending: clipsPending, group: group, hub: hub,
-    HOME_EPISODES: 3
+    clipCardFull: clipCardFull, thumb: thumb, nextBand: nextBand, clipsPending: clipsPending, group: group, hub: hub,
+    finder: finder, heroStats: heroStats, HOME_EPISODES: 3
   };
 };

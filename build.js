@@ -18,7 +18,8 @@
    WHAT IT WRITES  (everything between <!--BUILD:x--> markers)
      every page          the navigation, with the current page highlighted
      every page footer   the newest FOOTER_EPISODES episodes
-     index.html          now-playing chip, latest episodes, coming next, clip row
+     index.html          now-playing chip, hero play button and counts, latest
+                         episodes, coming next, clip row
      episodes/index.html the full grouped list of episodes and clips + schema
      each episode page   its released clips and links to neighbouring episodes
      about/index.html    the guest list
@@ -112,7 +113,7 @@ function shortTitle(e) {
 /* Smaller card used for "More episodes" on an episode page */
 function relatedCard(e) {
   return '<article class="card reveal"><a class="card-media" href="' + e.page + '"><img loading="lazy" src="' +
-    e.image + '" alt="On The Mend, an Australian GP podcast: episode ' + e.number + ", " + e.title + '">' +
+    C.thumb(e) + '" alt="On The Mend, an Australian GP podcast: episode ' + e.number + ", " + e.title + '">' +
     '<span class="play"><span class="play-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></span></a>' +
     '<div class="card-body"><span class="card-meta">Episode ' + e.number + " &middot; Full episode</span>" +
     '<h3><a href="' + e.page + '">' + e.title + "</a></h3>" +
@@ -176,6 +177,7 @@ for (const f of allPages()) {
     blocks.push(["now-playing", latest
       ? '<span class="now-text"><b>Now playing</b><small>Ep ' + latest.number + ": " + latest.title + "</small></span>"
       : ""]);
+    blocks.push(["hero-stats", C.heroStats()]);
     blocks.push(["home-episodes", published.slice(0, C.HOME_EPISODES).map(C.episodeCard).join("")]);
     blocks.push(["home-next", C.nextBand(upcoming[0])]);
     blocks.push(["home-clips", clips.map(C.clipCard).join("")]);
@@ -215,8 +217,9 @@ for (const f of allPages()) {
     blocks.push(["next-steps", nextSteps(ep)]);
   }
 
-  if (f === "index.html" && published[0]) {        /* point the now-playing chip at the newest episode */
-    write(f, read(f).replace(/(id="now-playing" href=")[^"]*"/, "$1" + published[0].page + '"'));
+  if (f === "index.html" && published[0]) {        /* point the now-playing chip and hero play button at the newest episode */
+    write(f, read(f).replace(/(id="now-playing" href=")[^"]*"/, "$1" + published[0].page + '"')
+      .replace(/(id="hero-play" href=")[^"]*"/, "$1" + published[0].page + '"'));
   }
   let missing = fill(f, blocks);
 
@@ -237,7 +240,7 @@ for (const f of allPages()) {
     write(f, read(f).replace(/(<script type="application\/ld\+json">)(\{[^<]*"@type": ?"PodcastEpisode"[^<]*\})(<\/script>)/,
       (all, a, json, b) => { const o = JSON.parse(json); o.datePublished = ep.published; return a + JSON.stringify(o) + b; }));
   }
-  missing = missing.filter((n) => !(n === "now-playing" && f !== "index.html"));
+  missing = missing.filter((n) => !(["now-playing", "hero-stats"].includes(n) && f !== "index.html"));
   if (missing.length) problems.push(f + " is missing markers: " + missing.join(", "));
 }
 console.log("  ok  navigation and footer written to " + allPages().length + " pages");

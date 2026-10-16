@@ -8,6 +8,9 @@
    "short" is an optional footer label. Without it the footer trims the title
    at a colon, comma or " with ".
    "topic" (episodes) finishes the sentence "<guest> on ..." in the FAQ.
+   "stream" (episodes) is "behind" for Behind the scenes episodes. Leave it out
+   for Health, explained. Clips follow the stream of their episode, and the
+   home page stream filter reads it.
    "published" (episodes) is the YouTube release date. It feeds the sitemap and
    the datePublished schema.
    "release" (clips, optional) is when a scheduled Short goes public, written as
@@ -39,6 +42,7 @@ window.OTM_DATA = [
       { label: "Health care and Medicare", by: "Services Australia", url: "https://www.servicesaustralia.gov.au/health-care-and-medicare", note: "What Medicare covers, including GP visits." }
     ],
     type: "episode",
+    stream: "behind",
     number: 5,
     page: "/episodes/making-the-most-of-your-gp-appointment/",
     title: "Making the Most of Your GP Appointment",
@@ -130,6 +134,7 @@ window.OTM_DATA = [
       { label: "Questions to ask your doctor", by: "healthdirect", url: "https://www.healthdirect.gov.au/questions-to-ask-your-doctor", note: "Tips for preparing questions, such as how you will get your results." }
     ],
     type: "episode",
+    stream: "behind",
     number: 4,
     page: "/episodes/medical-receptionist/",
     title: "A Day in the Life of a Receptionist",
