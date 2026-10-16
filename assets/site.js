@@ -53,6 +53,8 @@
   var nowChip = document.getElementById("now-playing");
   if (nowChip) {
     var latest = C.published()[0];
+    var heroImg = document.getElementById("hero-img");
+    if (latest && heroImg) { heroImg.src = C.thumb(latest); heroImg.alt = C.heroAlt(latest); }
     if (latest) {
       nowChip.querySelector("small").textContent = "Ep " + latest.number + ": " + latest.title;
       nowChip.href = latest.page || epLink(latest.id, "youtube");

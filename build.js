@@ -217,9 +217,10 @@ for (const f of allPages()) {
     blocks.push(["next-steps", nextSteps(ep)]);
   }
 
-  if (f === "index.html" && published[0]) {        /* point the now-playing chip and hero play button at the newest episode */
+  if (f === "index.html" && published[0]) {        /* point the hero photo, now-playing chip and play button at the newest episode */
     write(f, read(f).replace(/(id="now-playing" href=")[^"]*"/, "$1" + published[0].page + '"')
-      .replace(/(id="hero-play" href=")[^"]*"/, "$1" + published[0].page + '"'));
+      .replace(/(id="hero-play" href=")[^"]*"/, "$1" + published[0].page + '"')
+      .replace(/<img id="hero-img" [^>]*>/, '<img id="hero-img" src="' + C.thumb(published[0]) + '" alt="' + C.heroAlt(published[0]) + '">'));
   }
   let missing = fill(f, blocks);
 

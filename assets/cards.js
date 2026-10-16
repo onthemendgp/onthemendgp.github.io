@@ -249,6 +249,11 @@ window.OTM_CARDS = function (L, DATA, partner, now) {
       group("Short clips", "One or two minute highlights pulled from the episodes above.", cl);
   }
 
+  /* Hero photo description for the newest episode */
+  function heroAlt(item) {
+    return "On The Mend, an Australian GP podcast: episode " + item.number + ", " + item.title + ", with " + item.guest;
+  }
+
   /* Hero counts: full episodes, released clips and guests so far */
   function heroStats() {
     var eps = published();
@@ -273,6 +278,6 @@ window.OTM_CARDS = function (L, DATA, partner, now) {
     streamOf: streamOf, STREAM_LABEL: STREAM_LABEL, locationTerms: locationTerms, matches: matches,
     episodeCard: episodeCard, clipCard: clipCard, episodeClipCard: episodeClipCard,
     clipCardFull: clipCardFull, thumb: thumb, nextBand: nextBand, clipsPending: clipsPending, group: group, hub: hub,
-    finder: finder, heroStats: heroStats, HOME_EPISODES: 3
+    finder: finder, heroStats: heroStats, heroAlt: heroAlt, HOME_EPISODES: 3
   };
 };
