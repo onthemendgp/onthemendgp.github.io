@@ -484,5 +484,25 @@
     });
   })();
 
+  /* ----- Count clicks out to the platforms (GoatCounter, cookie-free) -----
+     Shows up in GoatCounter as click-youtube, click-spotify and so on,
+     with the page the click came from in the title. */
+  var OUT = [["youtube", /(^|\.)(youtube\.com|youtu\.be)$/], ["spotify", /(^|\.)spotify\.com$/],
+    ["instagram", /(^|\.)instagram\.com$/], ["facebook", /(^|\.)facebook\.com$/], ["tiktok", /(^|\.)tiktok\.com$/]];
+  document.addEventListener("click", function (e) {
+    var a = e.target && e.target.closest ? e.target.closest("a[href]") : null;
+    var gc = window.goatcounter;
+    if (!a || !gc || !gc.count) return;
+    var name = null;
+    if (/^mailto:/i.test(a.href)) name = "email";
+    else {
+      var host = "";
+      try { host = new URL(a.href).hostname; } catch (err) { return; }
+      for (var i = 0; i < OUT.length; i++) if (OUT[i][1].test(host)) { name = OUT[i][0]; break; }
+    }
+    if (!name) return;
+    gc.count({ path: "click-" + name, title: "Click to " + name + " from " + location.pathname, event: true });
+  });
+
   wireOutLinks(document);
 })();

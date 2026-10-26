@@ -96,6 +96,36 @@ function pageUrl(file) {
   return "/" + file.replace(/index\.html$/, "");
 }
 
+/* ---------- platform links and visitor counter, written into every page ---------- */
+/* Buttons marked data-link="youtube|spotify|instagram|facebook|tiktok|email" get their
+   real address here, so crawlers, link previews and no-JavaScript visitors never see "#".
+   Every page also gets the GoatCounter line (cookie-free visitor stats). */
+const COUNTER = '<script data-goatcounter="https://onthemendgp.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>';
+const unesc = (s) => String(s).replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, "&");
+const escAttr = (s) => String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;");
+function staticLinks(s) {
+  return s.replace(/<a ([^>]*?)data-link="([a-z]+)"([^>]*)>/g, (tag, before, key, after) => {
+    let attrs = before + 'data-link="' + key + '"' + after;
+    const subj = (attrs.match(/data-subject="([^"]*)"/) || [])[1];
+    const href = key === "email"
+      ? "mailto:" + (W.OTM_LINKS.email || "") + "?subject=" + encodeURIComponent(unesc(subj || "On The Mend enquiry"))
+      : C.platform(key);
+    attrs = /\bhref="[^"]*"/.test(attrs)
+      ? attrs.replace(/\bhref="[^"]*"/, 'href="' + escAttr(href) + '"')
+      : attrs + ' href="' + escAttr(href) + '"';
+    if (key !== "email") {
+      if (!/\btarget=/.test(attrs)) attrs += ' target="_blank"';
+      if (!/\brel=/.test(attrs)) attrs += ' rel="noopener"';
+    }
+    return "<a " + attrs + ">";
+  });
+}
+function addCounter(s) {
+  if (s.includes("gc.zgo.at/count.js")) return s;
+  const nl = s.includes("\r\n") ? "\r\n" : "\n";
+  return s.replace("</head>", COUNTER + nl + "</head>");
+}
+
 /* ---------- shared pieces ---------- */
 const NAV = [["/", "Home"], ["/episodes/", "Episodes"], ["/about/", "About"], ["/faq/", "FAQ"],
   ["/clinics/", "For clinics"], ["/contact/", "Contact"]];
@@ -233,6 +263,7 @@ for (const f of allPages()) {
       .replace(/<img id="hero-img" [^>]*>/, '<img id="hero-img" src="' + C.thumb(published[0]) + '" alt="' + C.heroAlt(published[0]) + '">'));
   }
   let missing = fill(f, blocks);
+  write(f, addCounter(staticLinks(read(f))));
 
   /* FAQ schema is rebuilt from the visible questions, so the two always match */
   if (f === "faq/index.html") {

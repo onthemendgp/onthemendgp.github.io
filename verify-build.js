@@ -105,6 +105,26 @@ for (const [name, staticHtml, liveHtml] of checks) {
   }
 }
 
+/* ---------- real platform links and the visitor counter on every page ---------- */
+console.log("\nPlatform links and visitor counter");
+(function walk(dir) {
+  for (const e of fs.readdirSync(path.join(ROOT, dir), { withFileTypes: true })) {
+    const rel = dir ? dir + "/" + e.name : e.name;
+    if (e.isDirectory()) {
+      if (!["design-options", ".git", "assets", "node_modules", "print"].includes(e.name)) walk(rel);
+    } else if (e.name.endsWith(".html") && !e.name.startsWith("google")) {
+      const s = read(rel);
+      const dead = (s.match(/<a [^>]*data-link="[a-z]+"[^>]*href="#"/g) || []).length;
+      const counter = s.includes("gc.zgo.at/count.js");
+      if (dead || !counter) {
+        console.log("  !!  " + rel + (dead ? "  " + dead + " button(s) still link to #" : "") + (counter ? "" : "  no visitor counter"));
+        failed++;
+      }
+    }
+  }
+})("");
+console.log(failed ? "" : "  ok  every page has real links and the counter");
+
 /* ---------- every episode page reachable by a static link ---------- */
 console.log("\nStatic crawl paths");
 const sandbox = { window: {} };
