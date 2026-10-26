@@ -416,6 +416,7 @@
     if (!a || !gc || !gc.count) return;
     var name = null;
     if (/^mailto:/i.test(a.href)) name = "email";
+    else if (/docs\.google\.com\/forms\//.test(a.href)) name = "question-form";
     else {
       var host = "";
       try { host = new URL(a.href).hostname; } catch (err) { return; }

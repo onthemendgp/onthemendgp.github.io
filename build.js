@@ -25,7 +25,9 @@
      each episode page   its released clips, links to neighbouring episodes
                          (More episodes and the side panel's Up next)
      about/index.html    the guest list
-     every page          "Be a guest" links point at /be-a-guest/
+     every page          "Be a guest" links point at /be-a-guest/, "Suggest a topic"
+                         at the question form on the Contact page
+     contact/index.html  the question form (askForm in links.js), or an email button
      sitemap.xml         every page, dated by its last real change
 
    Card markup lives in assets/cards.js, shared with site.js,
@@ -122,9 +124,22 @@ function staticLinks(s) {
     return "<a " + attrs + ">";
   });
 }
-/* "Be a guest" is one label with one address everywhere, including pages added later */
-function guestLinks(s) {
-  return s.replace(/<a href="\/contact\/">Be a guest<\/a>/g, '<a href="/be-a-guest/">Be a guest</a>');
+/* "Be a guest" and "Suggest a topic" each have one address everywhere, including pages added later */
+function involvedLinks(s) {
+  return s.replace(/<a href="\/contact\/">Be a guest<\/a>/g, '<a href="/be-a-guest/">Be a guest</a>')
+    .replace(/<a href="\/contact\/">Suggest a topic<\/a>/g, '<a href="/contact/#ask">Suggest a topic</a>');
+}
+
+/* The Google Form, embedded, with a plain link for anyone it does not load for.
+   Without a form link in links.js, an email button stands in. */
+function askForm() {
+  const form = (W.OTM_LINKS.askForm || "").trim();
+  if (!/^https:\/\/docs\.google\.com\/forms\//.test(form)) {
+    return '<a class="btn btn-coral" data-link="email" data-subject="On The Mend: topic suggestion">Email us your question</a>';
+  }
+  const embed = form.replace(/[?#].*$/, "") + "?embedded=true";
+  return '<iframe class="ask-frame" src="' + escAttr(embed) + '" title="Suggest a topic: question form" loading="lazy">Loading the form...</iframe>' +
+    '<p class="ask-alt">Form not showing? <a data-out href="' + escAttr(form) + '" target="_blank" rel="noopener">Open it in a new tab</a>.</p>';
 }
 function addCounter(s) {
   if (s.includes("gc.zgo.at/count.js")) return s;
@@ -269,6 +284,7 @@ for (const f of allPages()) {
   }
 
   if (f === "about/index.html") blocks.push(["guests", guestList()]);
+  if (f === "contact/index.html") blocks.push(["ask-form", askForm()]);
   if (f === "be-a-guest/index.html") blocks.push(["guest-gallery", guestCards("guest-gallery", true)]);
 
   if (f === "faq/index.html") {
@@ -295,7 +311,7 @@ for (const f of allPages()) {
       .replace(/<img id="hero-img" [^>]*>/, '<img id="hero-img" src="' + C.thumb(published[0]) + '" alt="' + C.heroAlt(published[0]) + '">'));
   }
   let missing = fill(f, blocks);
-  write(f, addCounter(staticLinks(guestLinks(read(f)))));
+  write(f, addCounter(staticLinks(involvedLinks(read(f)))));
 
   /* FAQ schema is rebuilt from the visible questions, so the two always match */
   if (f === "faq/index.html") {

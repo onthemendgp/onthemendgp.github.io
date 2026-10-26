@@ -19,6 +19,10 @@ window.OTM_LINKS = {
   // Contact
   email: "onthemendgp@gmail.com",
 
+  // "Suggest a topic" Google Form (owned by onthemendgp@gmail.com). Paste the form's
+  // share link ending in /viewform. Leave as "" and the Contact page shows an email button.
+  askForm: "https://docs.google.com/forms/d/e/1FAIpQLSdRHrb5x4zMJ93WlanXtUFo-soa_ihApIC8cldjrnpFZ-OSgg/viewform",
+
   // Episodes. youtubeId is the 11-character ID from the video URL
   // (https://www.youtube.com/watch?v=THIS_PART).
   // Leave a field as "" and the site falls back to the channel / show link.
