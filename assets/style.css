@@ -555,10 +555,10 @@ h3 { font-size: 1.25rem; }
    4 clips sit 4 across, 5 clips sit 5 across, no orphan on a new line. */
 .clip-grid {
   display: grid; gap: 22px;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(170px, 230px));   /* portrait clips stay clip-sized, even when only one or two are out */
 }
 @media (max-width: 900px) {
-  .clip-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 18px; }
+  .clip-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 200px)); gap: 18px; }
 }
 @media (max-width: 560px) {
   .clip-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
@@ -838,11 +838,10 @@ h2 .accent { font-style: italic; color: var(--coral); }
 .ep-lower-third span { font-size: .85rem; color: #A9BCCB; }
 
 /* Chapters beside the video */
-.ep-chapters { position: sticky; top: 92px; }
 .ep-chapters .eyebrow { display: block; margin-bottom: 14px; }
-.ep-chapters .chapters { grid-template-columns: 1fr; gap: 6px; max-height: calc(100vh - 160px); overflow-y: auto; padding-right: 4px; }
+.ep-chapters .chapters { grid-template-columns: 1fr; gap: 4px; }   /* the full list shows: no scroll box inside the page */
 .ep-chapters .chapters a {
-  color: var(--offwhite); background: rgba(232, 241, 232, .06); border-radius: 14px; padding: 12px 14px; align-items: center;
+  color: var(--offwhite); background: rgba(232, 241, 232, .06); border-radius: 12px; padding: 7px 12px; align-items: center;
 }
 .ep-chapters .chapters a:hover { background: rgba(232, 241, 232, .14); }
 .ep-chapters .chapters .ch-t {
@@ -877,7 +876,7 @@ h2 .accent { font-style: italic; color: var(--coral); }
 .ep-content .next-steps { margin-top: 44px; }
 
 /* Side panel */
-.ep-side { display: flex; flex-direction: column; gap: 20px; position: sticky; top: 92px; }
+.ep-side { display: flex; flex-direction: column; gap: 20px; }
 .side-card { border-radius: var(--radius); padding: 26px; display: flex; flex-direction: column; gap: 12px; }
 .side-eyebrow { font-size: .76rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
 .side-title { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; line-height: 1.25; }
