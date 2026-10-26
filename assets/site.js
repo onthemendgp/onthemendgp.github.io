@@ -70,6 +70,8 @@
   if (nextEl) nextEl.innerHTML = C.nextBand(C.coming()[0]);
   var clipRow = document.getElementById("home-clips");
   if (clipRow) clipRow.innerHTML = C.clips().map(C.clipCard).join("");
+  var watchClips = document.getElementById("watch-clips");
+  if (watchClips) watchClips.innerHTML = C.clips().slice(0, C.WATCH_CLIPS).map(C.clipCard).join("");
   var statsEl = document.getElementById("hero-stats");
   if (statsEl) statsEl.innerHTML = C.heroStats();      /* clip count moves as scheduled clips release */
 

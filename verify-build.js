@@ -32,11 +32,11 @@ function el() {
 }
 
 function runSiteJs() {
-  const results = el(), count = el(), input = el(), homeEps = el(), homeClips = el(), homeNext = el();
+  const results = el(), count = el(), input = el(), homeEps = el(), homeClips = el(), homeNext = el(), watchClips = el();
   input.value = "";
   const byId = {
     "search-results": results, "results-count": count, "search-input": input,
-    "home-episodes": homeEps, "home-clips": homeClips, "home-next": homeNext, "now-playing": null
+    "home-episodes": homeEps, "home-clips": homeClips, "home-next": homeNext, "watch-clips": watchClips, "now-playing": null
   };
   let renderFn = null;
   input.addEventListener = (ev, fn) => { if (ev === "input") renderFn = fn; };
@@ -62,7 +62,7 @@ function runSiteJs() {
   vm.runInContext(read("assets/cards.js"), sandbox);
   vm.runInContext(read("assets/site.js"), sandbox);
   if (renderFn) renderFn();
-  return { homeEps: homeEps.innerHTML, homeClips: homeClips.innerHTML, homeNext: homeNext.innerHTML, hub: results.innerHTML };
+  return { homeEps: homeEps.innerHTML, homeClips: homeClips.innerHTML, homeNext: homeNext.innerHTML, watchClips: watchClips.innerHTML, hub: results.innerHTML };
 }
 
 /* ---------- pull the static blocks back out ---------- */
@@ -80,7 +80,8 @@ const checks = [
   ["home episode cards", block("index.html", "home-episodes"), live.homeEps],
   ["home clip row", block("index.html", "home-clips"), live.homeClips],
   ["home coming next", block("index.html", "home-next"), live.homeNext],
-  ["episodes hub list", block("episodes/index.html", "episode-list"), live.hub]
+  ["episodes hub list", block("episodes/index.html", "episode-list"), live.hub],
+  ["waiting-room clips", block("watch/index.html", "watch-clips"), live.watchClips]
 ];
 
 let failed = 0;

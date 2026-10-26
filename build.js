@@ -28,6 +28,7 @@
      every page          "Be a guest" links point at /be-a-guest/, "Suggest a topic"
                          at the question form on the Contact page
      contact/index.html  the question form (askForm in links.js), or an email button
+     watch/index.html    the waiting-room page: latest episode player and the newest clips
      sitemap.xml         every page, dated by its last real change
 
    Card markup lives in assets/cards.js, shared with site.js,
@@ -225,6 +226,21 @@ function guestCards(cls, withEp) {
     '<strong class="gp-name">' + e.guest + '</strong><span class="gp-role">' + guestRole(e) + "</span></span></a></li>").join("") + "</ul>";
 }
 
+/* Waiting-room page: the newest episode, playable on the spot */
+function watchLatest(e) {
+  if (!e) return "";
+  const id = ((W.OTM_LINKS.episodes || {})[e.id] || {}).youtubeId;
+  const out = (href, label, cls) => '<a class="btn ' + cls + '" data-out href="' + escAttr(href) + '" target="_blank" rel="noopener">' + label + "</a>";
+  return '<div class="watch-latest reveal"><div class="ep-video">' + (id
+    ? '<iframe src="https://www.youtube-nocookie.com/embed/' + id + '?rel=0&amp;playsinline=1" title="' + escAttr(e.title) +
+      '" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>'
+    : '<img src="' + C.thumb(e) + '" alt="">') + "</div>" +
+    '<div class="watch-latest-text"><span class="eyebrow">Latest episode &middot; Episode ' + e.number + "</span>" +
+    "<h2>" + e.title + '</h2><p class="card-guest">With ' + e.guestCredit + "</p>" +
+    '<div class="hero-actions">' + out(C.epLink(e.id, "youtube"), "Watch on YouTube", "btn-coral") +
+    out(C.epLink(e.id, "spotify"), "Listen on Spotify", "btn-ghost") + "</div></div></div>";
+}
+
 function guestList() {
   const eps = C.published().concat(C.coming());
   return '<ul class="guest-list">' + eps.map((e) =>
@@ -285,6 +301,10 @@ for (const f of allPages()) {
 
   if (f === "about/index.html") blocks.push(["guests", guestList()]);
   if (f === "contact/index.html") blocks.push(["ask-form", askForm()]);
+  if (f === "watch/index.html") {
+    blocks.push(["watch-latest", watchLatest(published[0])]);
+    blocks.push(["watch-clips", clips.slice(0, C.WATCH_CLIPS).map(C.clipCard).join("")]);
+  }
   if (f === "be-a-guest/index.html") blocks.push(["guest-gallery", guestCards("guest-gallery", true)]);
 
   if (f === "faq/index.html") {
@@ -346,7 +366,7 @@ function lastChanged(file) {
   } catch (e) { return today; }
 }
 const order = ["/", "/episodes/", ...published.map((e) => e.page), "/about/", "/be-a-guest/", "/faq/", "/clinics/", "/contact/"];
-const files = allPages().filter((f) => pageUrl(f));
+const files = allPages().filter((f) => pageUrl(f) && !/<meta name="robots" content="noindex/.test(read(f)));   /* noindex pages stay out */
 const urls = order.filter((u) => files.some((f) => pageUrl(f) === u))
   .concat(files.map(pageUrl).filter((u) => !order.includes(u)));
 const sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +

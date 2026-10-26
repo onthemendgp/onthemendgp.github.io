@@ -278,6 +278,6 @@ window.OTM_CARDS = function (L, DATA, partner, now) {
     streamOf: streamOf, STREAM_LABEL: STREAM_LABEL, locationTerms: locationTerms, matches: matches,
     episodeCard: episodeCard, clipCard: clipCard, episodeClipCard: episodeClipCard,
     clipCardFull: clipCardFull, thumb: thumb, nextBand: nextBand, clipsPending: clipsPending, group: group, hub: hub,
-    finder: finder, heroStats: heroStats, heroAlt: heroAlt, HOME_EPISODES: 3
+    finder: finder, heroStats: heroStats, heroAlt: heroAlt, HOME_EPISODES: 3, WATCH_CLIPS: 3
   };
 };
