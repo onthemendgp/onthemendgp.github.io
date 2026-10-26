@@ -131,7 +131,7 @@ const sandbox = { window: {} };
 vm.createContext(sandbox);
 vm.runInContext(read("assets/episodes.js"), sandbox);
 const pages = (sandbox.window.OTM_DATA || []).filter((d) => d.page).map((d) => d.page);
-const html = ["index.html", "about/index.html", "faq/index.html", "clinics/index.html",
+const html = ["index.html", "about/index.html", "be-a-guest/index.html", "faq/index.html", "clinics/index.html",
   "contact/index.html", "episodes/index.html", "404.html"].filter((f) => fs.existsSync(path.join(ROOT, f))).map(read).join("");
 for (const p of pages) {
   const n = (html.match(new RegExp('href="' + p + '"', "g")) || []).length;

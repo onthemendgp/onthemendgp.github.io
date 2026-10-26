@@ -2,8 +2,8 @@
    ON THE MEND – SHARED SITE SCRIPT
    Populates links from links.js, renders episode/clip cards
    (templates live in cards.js, shared with build.js), powers the
-   search, partner clinic views (?p=code), FAQ accordion, mobile
-   menu, reveals and the Shorts lightbox.
+   search and topic filter, partner clinic views (?p=code), FAQ
+   accordion, mobile menu, reveals and the Shorts lightbox.
    ========================================================= */
 (function () {
   var L = window.OTM_LINKS || {};
@@ -114,73 +114,6 @@
     });
   }
 
-  /* ----- "What brings you in today?" topic and stream finder ----- */
-  var finderCount = document.getElementById("finder-count");
-  if (epGrid && finderCount) {
-    var FINDER_MAX = 9;
-    var finder = { stream: "", topic: "", label: "" };
-    var streamBtns = document.querySelectorAll(".stream-btn");
-    var topicBtns = document.querySelectorAll("[data-topic]");
-    var clearBtn = document.querySelector("[data-topic-clear]");
-    var allLink = document.getElementById("finder-all");
-
-    var renderFinder = function () {
-      streamBtns.forEach(function (b) {
-        var on = b.getAttribute("data-stream") === finder.stream;
-        b.classList.toggle("active", on);
-        b.setAttribute("aria-pressed", on ? "true" : "false");
-      });
-      topicBtns.forEach(function (b) {
-        var on = b.getAttribute("data-topic") === finder.topic;
-        b.classList.toggle("active", on);
-        b.setAttribute("aria-pressed", on ? "true" : "false");
-      });
-      if (clearBtn) clearBtn.hidden = !finder.stream && !finder.topic;
-
-      if (!finder.stream && !finder.topic) {
-        epGrid.innerHTML = C.published().slice(0, C.HOME_EPISODES).map(C.episodeCard).join("");
-        finderCount.textContent = "The latest episodes";
-        allLink.href = "/episodes/";
-        allLink.textContent = "Browse and search all episodes";
-      } else {
-        var hits = chronoSort(DATA.filter(function (d) {
-          return d.type !== "coming" && partnerVisible(d) &&
-            (!finder.stream || C.streamOf(d) === finder.stream) && C.matches(d, finder.topic);
-        }));
-        var what = [finder.label, finder.stream ? C.STREAM_LABEL[finder.stream] : ""].filter(Boolean).join(" · ");
-        finderCount.textContent = hits.length
-          ? hits.length + (hits.length === 1 ? " episode or clip" : " episodes and clips") + ": " + what
-          : "Nothing on " + what + " yet. Tell us it should be next, further down the page.";
-        epGrid.innerHTML = C.finder(hits.slice(0, FINDER_MAX));
-        var qs = [finder.topic ? "q=" + encodeURIComponent(finder.topic) : "", finder.stream ? "stream=" + finder.stream : ""].filter(Boolean).join("&");
-        allLink.href = "/episodes/" + (qs ? "?" + qs : "");
-        allLink.textContent = hits.length > FINDER_MAX ? "See all " + hits.length + " on the episodes page" : "Browse and search all episodes";
-      }
-      wireOutLinks(epGrid);
-      epGrid.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("visible"); });
-    };
-
-    streamBtns.forEach(function (b) {
-      b.addEventListener("click", function () { finder.stream = b.getAttribute("data-stream"); renderFinder(); });
-    });
-    topicBtns.forEach(function (b) {
-      b.addEventListener("click", function () {
-        var t = b.getAttribute("data-topic");
-        finder.topic = finder.topic === t ? "" : t;
-        finder.label = finder.topic ? b.textContent.trim() : "";
-        renderFinder();
-      });
-    });
-    if (clearBtn) clearBtn.addEventListener("click", function () {
-      finder.stream = ""; finder.topic = ""; finder.label = ""; renderFinder();
-    });
-    document.querySelectorAll("[data-pick-stream]").forEach(function (a) {
-      a.addEventListener("click", function () {
-        finder.stream = a.getAttribute("data-pick-stream"); finder.topic = ""; finder.label = ""; renderFinder();
-      });
-    });
-  }
-
   /* ----- Myth or fact ----- */
   var quizCards = document.querySelectorAll(".quiz-card");
   if (quizCards.length) {
@@ -200,23 +133,6 @@
           answer.focus();
         });
       });
-    });
-  }
-
-  /* ----- "What should we ask a GP next?" : opens the visitor's email app ----- */
-  var askForm = document.getElementById("ask-form");
-  if (askForm) {
-    var askBox = document.getElementById("ask-q");
-    document.querySelectorAll("[data-ask]").forEach(function (b) {
-      b.addEventListener("click", function () { askBox.value = b.getAttribute("data-ask"); askBox.focus(); });
-    });
-    askForm.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var q = askBox.value.trim();
-      if (!q) { askBox.focus(); return; }
-      location.href = "mailto:" + (L.email || "") + "?subject=" + encodeURIComponent("A question for On The Mend") +
-        "&body=" + encodeURIComponent(q);
-      document.getElementById("ask-sent").hidden = false;
     });
   }
 
@@ -335,7 +251,11 @@
         return partnerVisible(d) && C.matches(d, q) && (!hubStream || C.streamOf(d) === hubStream);
       });
       hits = partnerSort(chronoSort(hits));
-      chips.forEach(function (c) { c.classList.toggle("active", normalise(c.getAttribute("data-q")) === q); });
+      chips.forEach(function (c) {
+        var on = normalise(c.getAttribute("data-q")) === q;
+        c.classList.toggle("active", on);
+        c.setAttribute("aria-pressed", on ? "true" : "false");
+      });
       if (!hits.length) {
         countEl.textContent = "";
         var what = [searchInput.value.trim(), hubStream ? C.STREAM_LABEL[hubStream] : ""].filter(Boolean).join(" in ");
@@ -360,7 +280,8 @@
     searchInput.addEventListener("input", render);
     chips.forEach(function (c) {
       c.addEventListener("click", function () {
-        searchInput.value = c.getAttribute("data-q");
+        /* a second tap on the active topic clears it */
+        searchInput.value = c.classList.contains("active") ? "" : c.getAttribute("data-q");
         render();
       });
     });

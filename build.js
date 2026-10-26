@@ -18,12 +18,14 @@
    WHAT IT WRITES  (everything between <!--BUILD:x--> markers)
      every page          the navigation, with the current page highlighted
      every page footer   the newest FOOTER_EPISODES episodes
-     index.html          now-playing chip, hero play button and counts, latest
-                         episodes, coming next, clip row
+     index.html          now-playing chip, hero play button and counts, the
+                         "Recorded with" guest strip, latest episodes, coming next, clip row
+     be-a-guest/         the past guests (photo, name and role only)
      episodes/index.html the full grouped list of episodes and clips + schema
      each episode page   its released clips, links to neighbouring episodes
                          (More episodes and the side panel's Up next)
      about/index.html    the guest list
+     every page          "Be a guest" links point at /be-a-guest/
      sitemap.xml         every page, dated by its last real change
 
    Card markup lives in assets/cards.js, shared with site.js,
@@ -120,6 +122,10 @@ function staticLinks(s) {
     return "<a " + attrs + ">";
   });
 }
+/* "Be a guest" is one label with one address everywhere, including pages added later */
+function guestLinks(s) {
+  return s.replace(/<a href="\/contact\/">Be a guest<\/a>/g, '<a href="/be-a-guest/">Be a guest</a>');
+}
 function addCounter(s) {
   if (s.includes("gc.zgo.at/count.js")) return s;
   const nl = s.includes("\r\n") ? "\r\n" : "\n";
@@ -127,8 +133,8 @@ function addCounter(s) {
 }
 
 /* ---------- shared pieces ---------- */
-const NAV = [["/", "Home"], ["/episodes/", "Episodes"], ["/about/", "About"], ["/faq/", "FAQ"],
-  ["/clinics/", "For clinics"], ["/contact/", "Contact"]];
+const NAV = [["/", "Home"], ["/episodes/", "Episodes"], ["/about/", "About"], ["/be-a-guest/", "Be a guest"],
+  ["/faq/", "FAQ"], ["/clinics/", "For clinics"], ["/contact/", "Contact"]];
 function navHtml(u) {
   const section = u && u.startsWith("/episodes/") ? "/episodes/" : u;
   return "\n" + NAV.map(([href, label]) =>
@@ -180,6 +186,30 @@ function nextSteps(ep) {
       '<span class="ns-note">' + r.note + "</span></li>").join("") + "</ul></div>";
 }
 
+/* Past guests: photo, name and role only (no quotes until Avant has seen them).
+   The photo is the guest's own corner of the episode still: GUEST_FACE is where their
+   face sits in that 960 x 540 image. An episode without an entry shows the whole still. */
+const GUEST_FACE = { 1: [790, 190], 2: [775, 180], 3: [855, 175], 4: [860, 150], 5: [210, 220], 6: [150, 165] };
+const ZOOM = 3.2;                 /* image width as a multiple of the circle */
+function guestPhoto(e) {
+  const f = GUEST_FACE[e.number];
+  const h = ZOOM * 9 / 16, pct = (v) => +(v * 100).toFixed(1) + "%";
+  const clamp = (v, lo) => Math.min(0, Math.max(lo, v));
+  const style = f ? ' style="width:' + pct(ZOOM) + ";left:" + pct(clamp(0.5 - f[0] / 960 * ZOOM, 1 - ZOOM)) +
+    ";top:" + pct(clamp(0.5 - f[1] / 540 * h, 1 - h)) + '"' : "";
+  return '<span class="gp-photo"><img loading="lazy" src="' + C.thumb(e) + '" alt="' + e.guest + '"' + style + "></span>";
+}
+function guestRole(e) {
+  const r = e.guestCredit.replace(e.guest, "").replace(/^,\s*/, "").replace(/^who practises/, "practises");
+  return r.charAt(0).toUpperCase() + r.slice(1);
+}
+function guestCards(cls, withEp) {
+  return '<ul class="' + cls + '">' + published.map((e) =>
+    '<li><a href="' + e.page + '">' + guestPhoto(e) + "<span>" +
+    (withEp ? '<span class="gp-ep">Episode ' + e.number + "</span>" : "") +
+    '<strong class="gp-name">' + e.guest + '</strong><span class="gp-role">' + guestRole(e) + "</span></span></a></li>").join("") + "</ul>";
+}
+
 function guestList() {
   const eps = C.published().concat(C.coming());
   return '<ul class="guest-list">' + eps.map((e) =>
@@ -217,6 +247,7 @@ for (const f of allPages()) {
       ? '<span class="now-text"><b>Now playing</b><small>Ep ' + latest.number + ": " + latest.title + "</small></span>"
       : ""]);
     blocks.push(["hero-stats", C.heroStats()]);
+    blocks.push(["home-guests", guestCards("guest-strip", false)]);
     blocks.push(["home-episodes", published.slice(0, C.HOME_EPISODES).map(C.episodeCard).join("")]);
     blocks.push(["home-next", C.nextBand(upcoming[0])]);
     blocks.push(["home-clips", clips.map(C.clipCard).join("")]);
@@ -238,6 +269,7 @@ for (const f of allPages()) {
   }
 
   if (f === "about/index.html") blocks.push(["guests", guestList()]);
+  if (f === "be-a-guest/index.html") blocks.push(["guest-gallery", guestCards("guest-gallery", true)]);
 
   if (f === "faq/index.html") {
     const names = published.slice().reverse().map((e) => e.guest + " on " + e.topic);
@@ -263,7 +295,7 @@ for (const f of allPages()) {
       .replace(/<img id="hero-img" [^>]*>/, '<img id="hero-img" src="' + C.thumb(published[0]) + '" alt="' + C.heroAlt(published[0]) + '">'));
   }
   let missing = fill(f, blocks);
-  write(f, addCounter(staticLinks(read(f))));
+  write(f, addCounter(staticLinks(guestLinks(read(f)))));
 
   /* FAQ schema is rebuilt from the visible questions, so the two always match */
   if (f === "faq/index.html") {
@@ -297,7 +329,7 @@ function lastChanged(file) {
     return d || today;
   } catch (e) { return today; }
 }
-const order = ["/", "/episodes/", ...published.map((e) => e.page), "/about/", "/faq/", "/clinics/", "/contact/"];
+const order = ["/", "/episodes/", ...published.map((e) => e.page), "/about/", "/be-a-guest/", "/faq/", "/clinics/", "/contact/"];
 const files = allPages().filter((f) => pageUrl(f));
 const urls = order.filter((u) => files.some((f) => pageUrl(f) === u))
   .concat(files.map(pageUrl).filter((u) => !order.includes(u)));
