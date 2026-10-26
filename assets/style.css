@@ -1000,3 +1000,25 @@ h2 .accent { font-style: italic; color: var(--coral); }
 @media (max-width: 860px) {
   .watch-latest { grid-template-columns: 1fr; gap: 24px; }
 }
+
+/* ---------- Episode pages: chapters beside the video ----------
+   Title, description and buttons run across the top; the video and
+   "Jump to a moment" then start side by side, so a chapter sits next
+   to the player it controls. Below 1041px everything stacks. */
+@media (min-width: 1041px) {
+  .ep-hero-main { display: contents; }
+  .ep-hero-grid {
+    grid-template-columns: minmax(0, 1fr) 340px; column-gap: 44px; row-gap: 0;
+    grid-template-areas: "crumb crumb" "tags tags" "title title" "lede lede" "guest guest" "actions actions" "video chap" "lower chap";
+  }
+  .ep-hero-main > .eyebrow { grid-area: crumb; }
+  .ep-hero-main > .ep-tags { grid-area: tags; }
+  .ep-hero-main > h1 { grid-area: title; max-width: 24ch; }
+  .ep-hero-main > .lede { grid-area: lede; max-width: 70ch; }
+  .ep-hero-main > .card-guest { grid-area: guest; }
+  .ep-hero-main > .hero-actions { grid-area: actions; }
+  .ep-hero-main > .ep-video { grid-area: video; }
+  .ep-hero-main > .ep-lower-third { grid-area: lower; justify-self: start; }
+  .ep-chapters { grid-area: chap; }
+  .ep-chapters .eyebrow { margin: -26px 0 10px; }
+}

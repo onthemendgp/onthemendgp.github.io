@@ -417,7 +417,8 @@
     var gc = window.goatcounter;
     if (!a || !gc || !gc.count) return;
     var name = null;
-    if (/^mailto:/i.test(a.href)) name = "email";
+    if (a.closest(".chapters")) name = "chapter";          /* plays on the page, so not a YouTube click */
+    else if (/^mailto:/i.test(a.href)) name = "email";
     else if (/docs\.google\.com\/forms\//.test(a.href)) name = "question-form";
     else {
       var host = "";
