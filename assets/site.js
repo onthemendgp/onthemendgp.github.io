@@ -338,6 +338,8 @@
     });
   }, { threshold: 0.12 });
   document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
+  /* Safety net: if a browser never reports scrolling (some phone browsers), show everything anyway */
+  if (typeof setTimeout === "function") setTimeout(function () { document.querySelectorAll(".reveal:not(.visible)").forEach(function (el) { el.classList.add("visible"); }); }, 2500);
 
   /* ----- Short clip lightbox: play Shorts on the site instead of leaving ----- */
   (function shortsPlayer() {

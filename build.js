@@ -231,9 +231,9 @@ function watchLatest(e) {
   if (!e) return "";
   const id = ((W.OTM_LINKS.episodes || {})[e.id] || {}).youtubeId;
   const out = (href, label, cls) => '<a class="btn ' + cls + '" data-out href="' + escAttr(href) + '" target="_blank" rel="noopener">' + label + "</a>";
-  return '<div class="watch-latest reveal"><div class="ep-video">' + (id
+  return '<div class="watch-latest"><div class="ep-video">' + (id
     ? '<iframe src="https://www.youtube-nocookie.com/embed/' + id + '?rel=0&amp;playsinline=1" title="' + escAttr(e.title) +
-      '" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>'
+      '" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>'
     : '<img src="' + C.thumb(e) + '" alt="">') + "</div>" +
     '<div class="watch-latest-text"><span class="eyebrow">Latest episode &middot; Episode ' + e.number + "</span>" +
     "<h2>" + e.title + '</h2><p class="card-guest">With ' + e.guestCredit + "</p>" +
