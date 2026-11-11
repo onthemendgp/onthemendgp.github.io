@@ -149,7 +149,7 @@ window.OTM_DATA = [
     guest: "Emily Ryan",
     clinic: "Chelsea Arcade Medical",
     suburb: "Chelsea",
-    guestCredit: "Emily Ryan, medical receptionist",
+    guestCredit: "Emily Ryan, medical receptionist at Chelsea Arcade Medical",
     image: "/assets/img/ep4.jpg",
     state: "VIC",
     published: "2026-08-20",
