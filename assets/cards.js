@@ -180,13 +180,50 @@ window.OTM_CARDS = function (L, DATA, partner, now) {
       '<div class="card-body"><span class="card-meta">Clip</span><h3>' + item.title + "</h3></div></article>";
   }
 
+  /* Where the guest's face sits in each vertical clip thumbnail (0 = top, 1 = bottom),
+     so the wide hub card shows a face, not hair. New clips without an entry use 0.25.
+     Set by eye on 12 Nov 2026; for split-screen clips this points at the guest. */
+  var CLIP_FACE = {
+    "tell-your-manager": 0.72,
+    "certificate-of-capacity": 0.76,
+    "dont-push-through": 0.17,
+    "any-job": 0.17,
+    "ten-minutes": 0.31,
+    "medicare-rules": 0.37,
+    "prepare-gp-appointment": 0.37,
+    "gp-follow-up": 0.39,
+    "three-simple-ways": 0.69,
+    "down-south": 0.72,
+    "small-spot": 0.2,
+    "spot-vs-full": 0.73,
+    "gp-skin-medicine": 0.76,
+    "signs-struggling": 0.2,
+    "health-checks-age": 0.28,
+    "small-changes": 0.22,
+    "mens-health-overlooked": 0.75,
+    "hearing-checks-matter": 0.22,
+    "protect-your-hearing": 0.3,
+    "earbuds-hearing": 0.22,
+    "hearing-check-involves": 0.28,
+    "receptionist-really-does": 0.18,
+    "results-doctor-first": 0.87,
+    "surprise-a-doctor": 0.2,
+    "small-act-of-care": 0.17
+  };
+  function clipFocus(item) {
+    var f = CLIP_FACE[item.id] != null ? CLIP_FACE[item.id] : 0.25;
+    var shown = 10 / 16 * 480 / 854;          /* share of the 9:16 image a 16:10 card shows */
+    var top = Math.min(Math.max(f - shown / 2, 0), 1 - shown);
+    return +(top / (1 - shown) * 100).toFixed(1);
+  }
+
   /* Full card for the episodes hub */
   function clipCardFull(item) {
     var link = clipLink(item.id);
     var page = episodePage(item.episode);
     return '<article class="card stream-' + streamOf(item) + ' reveal">' +
       '<a class="card-media" data-out href="' + link + '" style="aspect-ratio:16/10"><img loading="lazy" src="' +
-      thumb(item) + '" alt="' + item.title + '" style="object-position:top">' + PLAY + "</a>" +
+      thumb(item) + '" alt="' + item.title + '" style="object-position:50% ' + clipFocus(item) + '%">' + PLAY + "</a>" +
       '<div class="card-body">' +
       '<span class="card-meta">Short clip &middot; ' +
       (page ? '<a href="' + page + '">From episode ' + item.episode + "</a>" : "From episode " + item.episode) +
