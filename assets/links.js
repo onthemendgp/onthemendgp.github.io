@@ -51,12 +51,21 @@ window.OTM_LINKS = {
       youtube: "https://www.youtube.com/watch?v=XlUJqfm-9ok",
       youtubeId: "XlUJqfm-9ok",
       spotify: "https://open.spotify.com/episode/3Y3Yh1CdbtkMx5v1qn2W1Y"
+    },
+    ep6: {
+      youtube: "https://www.youtube.com/watch?v=1oVe_zQgvyw",
+      youtubeId: "1oVe_zQgvyw",
+      spotify: "https://open.spotify.com/episode/2qgr4G9NrzEPy83hoRHGlY"
     }
   },
 
   // Individual clip / Shorts URLs. If left as "", clip cards
   // link to the YouTube channel instead.
   clips: {
+    "tell-your-manager": "https://youtube.com/shorts/iExgsg06YrI",
+    "certificate-of-capacity": "https://youtube.com/shorts/0Lt4YeZTHOM",
+    "dont-push-through": "https://youtube.com/shorts/Z5eSQuyNnBE",
+    "any-job": "https://youtube.com/shorts/gHnq7yTKCYQ",
     "ten-minutes": "https://youtube.com/shorts/gYhpSSv5Rl0",
     "medicare-rules": "https://youtube.com/shorts/xsoVqSoE79Q",
     "prepare-gp-appointment": "https://youtube.com/shorts/Am1Q40euMJ0",

@@ -20,20 +20,26 @@
 window.OTM_DATA = [
   {
     id: "ep6",
-    type: "coming",
+    next: [
+      { label: "What to do when you've been injured at work", by: "WorkSafe Victoria", url: "https://www.worksafe.vic.gov.au/what-do-when-youve-been-injured-work", note: "Report it to your employer in writing within 30 days, see your GP, and how to make a claim." },
+      { label: "Certificate of capacity", by: "WorkSafe Victoria", url: "https://www.worksafe.vic.gov.au/certificate-capacity", note: "What a certificate of capacity is, who can issue it and how long it lasts." }
+    ],
+    type: "episode",
     number: 6,
+    page: "/episodes/work-injuries-workcover/",
     title: "Hurt at Work? WorkCover and Occupational Health",
     short: "Work Injuries",
     topic: "work injuries and WorkCover",
     guest: "Dr Vinny Lam",
-    clinic: "",
-    suburb: "",
-    guestCredit: "Dr Vinny Lam, GP",
-    image: "",
+    clinic: "Balwyn Central Medical",
+    suburb: "Balwyn",
+    guestCredit: "Dr Vinny Lam, who practises at Balwyn Central Medical",
+    image: "/assets/img/ep6.jpg",
     state: "VIC",
-    description: "What to do in the first 48 hours after a workplace injury, what a certificate of capacity is, and how WorkCover appointments work.",
+    published: "2026-11-09",
+    description: "What to do after a work injury, why you should not push through it, what a certificate of capacity is, and how WorkCover consults are paid.",
     tags: ["Occupational health", "WorkCover", "Work injuries"],
-    keywords: "workcover work cover worksafe occupational health workplace injury injured at work certificate of capacity return to work claim number insurer employer back pain carpal tunnel desk job lam gp victoria"
+    keywords: "workcover work cover worksafe occupational health workplace injury injured at work hurt at work certificate of capacity medical certificate return to work claim number insurer employer excess back pain neck strain carpal tunnel desk job balwyn vinny lam vincent lam gp victoria melbourne"
   },
   {
     id: "ep5",
@@ -152,6 +158,67 @@ window.OTM_DATA = [
     keywords: "receptionist medical receptionist reception front desk day in the life behind the scenes phones bookings appointments referrals records test results pathology results medical records healthcare admin emily ryan clinic team medical practice chelsea victoria melbourne"
   },
 
+  /* ---------------- Episode 6 clips ---------------- */
+  {
+    id: "tell-your-manager",
+    type: "clip",
+    episode: 6,
+    release: "2026-11-13T19:00:00+11:00",
+    title: "Hurt at work? Tell your manager first",
+    guest: "Dr Vinny Lam",
+    clinic: "Balwyn Central Medical",
+    suburb: "Balwyn",
+    state: "VIC",
+    image: "/assets/img/clip_Hurt-at-work-Tell-your-manager-first.jpg",
+    description: "One of the biggest mistakes after a work injury is not telling your manager. Why your workplace needs to know it happened.",
+    tags: ["WorkCover", "Work injuries"],
+    keywords: "hurt at work report injury tell manager line manager boss first 48 hours workcover mistakes"
+  },
+  {
+    id: "certificate-of-capacity",
+    type: "clip",
+    episode: 6,
+    release: "2026-11-20T19:00:00+11:00",
+    title: "Certificate of capacity vs medical certificate",
+    guest: "Dr Vinny Lam",
+    clinic: "Balwyn Central Medical",
+    suburb: "Balwyn",
+    state: "VIC",
+    image: "/assets/img/clip_Certificate-of-capacity-vs-medical-certif.jpg",
+    description: "How a certificate of capacity sets out what you can and cannot do at work, and why your GP reviews it as you recover.",
+    tags: ["WorkCover", "Return to work"],
+    keywords: "certificate of capacity medical certificate difference workcover return to work restrictions review renew"
+  },
+  {
+    id: "dont-push-through",
+    type: "clip",
+    episode: 6,
+    release: "2026-11-27T19:00:00+11:00",
+    title: "Hurt at work? Don't push through it",
+    guest: "Dr Vinny Lam",
+    clinic: "Balwyn Central Medical",
+    suburb: "Balwyn",
+    state: "VIC",
+    image: "/assets/img/clip_Hurt-at-work-Dont-push-through-it.jpg",
+    description: "Why carrying on with an injury for days can make it worse, and harder to tell when the injury actually happened.",
+    tags: ["Work injuries", "Occupational health"],
+    keywords: "push through injury shoulder injury keep working worse workcover timeline"
+  },
+  {
+    id: "any-job",
+    type: "clip",
+    episode: 6,
+    release: "2026-12-04T19:00:00+11:00",
+    title: "Work injuries can happen in any job",
+    guest: "Dr Vinny Lam",
+    clinic: "Balwyn Central Medical",
+    suburb: "Balwyn",
+    state: "VIC",
+    image: "/assets/img/clip_Work-injuries-can-happen-in-any-job.jpg",
+    description: "Occupational health is not only for physical jobs. Even desk work can lead to neck strain, back strain or carpal tunnel.",
+    tags: ["Occupational health", "Work injuries"],
+    keywords: "occupational health desk job office neck strain back strain carpal tunnel typing any workplace"
+  },
   /* ---------------- Episode 5 clips ---------------- */
   {
     id: "ten-minutes",
