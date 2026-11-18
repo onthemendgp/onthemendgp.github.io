@@ -52,6 +52,10 @@ renders at runtime, so the page cannot flicker or drift.
 git add . && git commit -m "Publish episode N" && git push
 ```
 
+Cloudflare Pages picks up the push and publishes the site within about a minute. Check
+**Workers & Pages > onthemendgp > Deployments** in the On The Mend Cloudflare account shows a
+green tick. If GitHub is ever unavailable, see `HOSTING-RUNBOOK.md` for publishing by direct upload.
+
 Then in Google Search Console, paste the new episode URL into the inspection bar
 at the top and click **Request indexing**.
 
@@ -83,7 +87,7 @@ at the top and click **Request indexing**.
   browser) and `build.js` (when you build) use it, so they cannot drift apart
 - `build.js` only rewrites files whose content actually changed, and dates each
   sitemap entry by that page's last commit
-- `404.html` is the branded "page not found" page. GitHub Pages serves it automatically
+- `404.html` is the branded "page not found" page. Cloudflare Pages serves it automatically
 
 ## Why the build script exists
 
