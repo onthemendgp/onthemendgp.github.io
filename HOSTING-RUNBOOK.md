@@ -22,10 +22,10 @@ GitHub Pages is still switched on as a fallback until early December 2026, but t
 | Account | Who | Notes |
 |---|---|---|
 | GitHub organisation `onthemendgp` | Ajmal (Owner), Arun (Owner, invited 17 Nov 2026) | The repo belongs to the organisation, not to a person. The Cloudflare GitHub app is installed on this org for the one repo only |
-| Cloudflare account "On The Mend" | Milinda (Super Admin), Ajmal (Administrator). Asked Milinda on 18 Nov 2026 to make Ajmal a Super Admin and add Arun | Holds only `onthemendgp.com.au` and the Pages project. Created by Milinda; renamed from his default name |
+| Cloudflare account "On The Mend" | Milinda (Super Admin), Ajmal (Administrator). Asked Milinda on 18 Nov 2026 to add a second Super Admin (a backup login of his own) | Holds only `onthemendgp.com.au` and the Pages project. Created by Milinda; renamed from his default name |
 | Cloudflare account "On The Mend (spare)" | Ajmal | Empty spare made on 17 Nov 2026. Holds a pending copy of the domain and nothing live. Safe to ignore |
 | Crazy Domains (registrar) | Milinda | Know when the domain renews and that auto-renew is on |
-| Google Search Console | Ajmal | Verified by an HTML file. Add a DNS TXT verification as a backup (see below) |
+| Google Search Console | Ajmal (verified owner by DNS TXT, 18 Nov 2026); the original owner account verifies by the HTML file `googlec8d9449e37ae1a47.html` | Keep both the TXT record and the HTML file in place |
 
 Everyone with access should use two-factor sign-in with an authenticator app, and keep backup codes somewhere other than that account.
 
@@ -37,7 +37,9 @@ Everyone with access should use two-factor sign-in with an authenticator app, an
 - Security: Email Address Obfuscation off (it rewrote the site's mailto links).
 - AI Crawl Control: nothing blocked. robots.txt is ours, unchanged.
 - Notification: "Website deploy failed" (Pages, production) emails Ajmal.
-- No email on the domain (the show uses a Gmail address), so no MX records.
+- No email on the domain (the show uses a Gmail address), so no MX records. Anti-spoofing: TXT `@` `v=spf1 -all` and TXT `_dmarc` `v=DMARC1; p=reject;` (added 18 Nov 2026). If email is ever set up on this domain, change these first.
+- TXT `@` `google-site-verification=...` keeps Google Search Console verified. Never delete it.
+- Clinic domains and clinic email are separate and were not touched; they carry patient email and have their own security.
 
 Cloudflare Pages redirects any `.html` address to the same address without `.html` (for example `/404.html` to `/404`). That is expected.
 
